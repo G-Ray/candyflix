@@ -26,7 +26,7 @@ var locale = {
 			$.get('/locale/'+locale.language+'.json', function(json){
 
 				try{
-					locale.words = JSON.parse(json);
+					locale.words = json;
 					localStorage.setItem('locale_words', json);
 					localStorage.setItem('locale', locale.language);
 					callback();
