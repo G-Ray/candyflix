@@ -1,0 +1,230 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Popcorn Time</title>
+        <script type="text/javascript">
+//<![CDATA[
+try{if (!window.CloudFlare) {var CloudFlare=[{verbose:0,p:1410365309,byc:0,owlid:"cf",bag2:1,mirage2:0,oracle:0,paths:{cloudflare:"/cdn-cgi/nexp/dokv=88e434a982/"},atok:"9416d76de625dd000e538a7347322bf1",petok:"91c46d85183e6a520726ebc7759555197c2e15e5-1411249522-1800",zone:"time4popcorn.eu",rocket:"0",apps:{}}];CloudFlare.push({"apps":{"ape":"8baa1c05eb376d425107cf3832d3cfda"}});!function(a,b){a=document.createElement("script"),b=document.getElementsByTagName("script")[0],a.async=!0,a.src="//ajax.cloudflare.com/cdn-cgi/nexp/dokv=97fb4d042e/cloudflare.min.js",b.parentNode.insertBefore(a,b)}()}}catch(e){};
+//]]>
+</script>
+<link rel="stylesheet" href="/css/app.css?id=77">
+        <link rel="stylesheet" href="/css/video-js.css?id=4">
+        <script src="/js/video.js?id=7" type="text/javascript" charset="utf-8"></script>
+        <script src="/js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/api.js?id=6" type="text/javascript" charset="utf-8"></script>
+        <script src="/js/locale.js" type="text/javascript" charset="utf-8"></script>
+        <script src="/js/app.js?id=6" type="text/javascript" charset="utf-8"></script>
+        <script src="/js/ui.js?id=10" type="text/javascript" charset="utf-8"></script>
+        <script src="/js/fetcher.js?id=3" type="text/javascript" charset="utf-8"></script>
+        <script src="/js/utils.js?id=4" type="text/javascript" charset="utf-8"></script>
+        <script src="/js/scrappers/movies/t4p_movies.js?id=7" type="text/javascript" charset="utf-8"></script>
+        <script src="/js/scrappers/tv/t4p_tv.js?id=3" type="text/javascript" charset="utf-8"></script>
+        <script src="/js/scrappers/subtitles/ysubs.js?id=6" type="text/javascript" charset="utf-8"></script>
+        <script src="/js/scrappers/subtitles/torrentsapi.js?id=20" type="text/javascript" charset="utf-8"></script>
+    </head>
+    <body>
+		<div id="home">
+
+				<div id="header">
+
+					<div id="titlebar_buttons">
+						<button id="min" data-title-trans="min_window" title="Minimize window"></button>
+						<button id="max" data-title-trans="max_window" title="Maximize window"></button>
+						<button id="close" data-title-trans="close_window" title="Close"></button>
+					</div>
+					
+					<img src="/images/logo.png" id="logo">
+
+					<div id="toolbar">
+						<div id="toolbar_movies" class="toolbar_btn clickable bold section_indicator activated" data-section="movies""><span data-in-trans="movies">Movies</span></div>
+						<div id="toolbar_tv" class="toolbar_btn bold clickable section_indicator" data-section="tv"><span data-in-trans="tv_shows">TV shows</span></div>
+						<div id="toolbar_genres" class="toolbar_btn clickable"><span data-in-trans="Genre">Genre</span>:&nbsp; <span class="selection_title" data-in-trans="all">All</span> &nbsp;<span class="icon caret-down"></span></div>
+						<!--<div id="toolbar_sort" class="toolbar_btn clickable"><span data-in-trans="sortBy">Sort By</span>:&nbsp; <span class="selection_title" data-in-trans="seeds">Popularity</span> <span class="icon caret-down"></span></div>-->
+					</div>
+
+					<div id="search_bar">
+						<input type="text" placeholder="Search..." id="search_input">
+						<span class="icon search"></span>
+					</div>
+				</div>
+
+				<div id="container">
+					<div id="movies_catalog"></div>
+				</div>
+			</div>
+
+		<div id="genres_box"></div>
+		<div id="msg"><div></div></div>
+
+		<div id="loading_wrapper">
+			<div class="pocholin"><img src="/images/pocholin.png" class="pocholin_rotation"></div>
+			<div></div>
+			<div class="progress_bar"><div class="fill"></div></div>
+			<div class="msg"></div>
+			<div class="percentage"></div>
+		</div>
+
+
+		<div id="html_resource">
+				<div id="movie_cover_html">
+					<div class="movie_poster">[##poster_img##]
+						<div class="poster_slide">
+							<div class="watch"><span class="icon eye"></span></div>
+							<div class="runtime">[##runtime##] <span data-in-trans="minutes"></span></div>
+							<div class="stars">
+								[##stars##]
+							</div>
+						</div>
+					</div>
+					<div class="movie_title">[##title##]</div>
+					<div class="movie_year">[##year##]</div>
+				</div>
+
+
+				<div id="movie_page_html">
+						<div class="movie_poster"></div>
+						<div class="likebox"><iframe data-src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Ftime4popcorn.eu%2Fget.php%3Fi%3D[##imdb##]&amp;width&amp;layout=button_count&amp;action=like&amp;show_faces=true&amp;share=true&amp;height=21&amp;appId=125713237517292" scrolling="no" frameborder="0" style="width:130px;border:none; overflow:hidden; height:21px;" allowtransparency="true"></iframe></div>
+						<div class="content">
+							<div class="title">[##title##]</div>
+							<div class="details">
+								<ul>
+									<li class="detail year">[##year##]</li>
+									<li class="sep"></li>
+									<li class="detail runtime">[##runtime##]</li>
+									<li class="sep"></li>
+									<li class="detail genre">[##genre##]</li>
+									<li class="sep"></li>
+									<li class="detail stars">[##stars##]</li>
+								</ul>
+								<div style="clear:both"></div>
+							</div>
+							<div class="trailer_bar">
+								<div class="trailer_btn"><span>►</span> &nbsp;<span data-in-trans="trailer">Trailer</span></div>
+							</div>
+
+							<div class="description">[##description##]</div>
+							<div class="actors">[##actors##]</div>
+
+
+							<div class="left_section">
+								<a class="watch_btn" data-in-trans="watchItNow">Watch</a>
+								<div class="torrents"></div>
+							</div>
+							<div class="right_section">
+								<div class="subtitles_flags">
+									<div><span data-in-trans="subtitledIn"></span>:</div>
+								</div>
+							</div>							
+						</div>
+				</div>
+
+
+				<div id="tvshow_page_html">
+						
+						<div class="episode_content">
+							<div class="episode_title"></div>
+							<div class="episode_description"></div>
+							<a class="watch_btn" data-in-trans="watchItNow">Watch</a>
+							<div class="torrents"></div>
+						</div>
+
+						<div class="season_box">
+								<div class="choose_season">
+									<select onchange="ui.home.catalog.tv_show.set_season(this.value)"></select>
+								</div>
+								<div class="episodes_box"></div>
+						</div>
+						<div class="movie_poster"></div>
+						<div class="likebox"><iframe data-src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Ftime4popcorn.eu%2Fget.php%3Fi%3D[##imdb##]&amp;width&amp;layout=button_count&amp;action=like&amp;show_faces=true&amp;share=true&amp;height=21&amp;appId=125713237517292" scrolling="no" frameborder="0" style="width:130px;border:none; overflow:hidden; height:21px;" allowtransparency="true"></iframe></div>
+						<div class="content">
+							<div class="title">[##title##]</div>
+							<div class="details">
+								<ul>
+									<li class="detail year">[##year##]</li>
+									<li class="sep"></li>
+									<li class="detail runtime">[##runtime##]</li>
+									<li class="sep"></li>
+									<li class="detail genre">[##genre##]</li>
+									<li class="sep"></li>
+									<li class="detail stars">[##stars##]</li>
+								</ul>
+								<div style="clear:both"></div>
+							</div>
+							<div class="trailer_bar">
+								<div class="trailer_btn"><span>►</span> &nbsp;<span data-in-trans="trailer">Trailer</span></div>
+							</div>
+
+							<div class="description">[##description##]</div>
+							<div class="actors">[##actors##]</div>
+						</div>
+				</div>
+
+
+				<div id="torrent_option_html">
+					<div class="torrent_option">
+						<div class="quality">[##quality##]</div>
+						<div class="peers">[##peers##]</div>
+						<div class="health" title="Torrent health: [##health##]"><span class="icon health [##health##]"></span></div>
+					</div>
+				</div>
+		</div>
+
+<script>
+
+	//we want to know how much users are using our awesome app!
+	
+	var
+	user_id 		= localStorage.getItem('t4p_user_id'),
+	register_date	= localStorage.getItem('t4p_register_date');
+
+	if(!user_id){
+		var s4 = function(){
+		  return Math.floor((1 + Math.random()) * 0x10000)
+					 .toString(16)
+					 .substring(1);
+		};
+
+		user_id 		= (s4() + s4() + s4() + s4() + s4() + s4() + s4() + s4()).toUpperCase();
+		register_date 	= Math.ceil(+new Date/1000).toString();
+		localStorage.setItem('t4p_user_id', user_id);
+		localStorage.setItem('t4p_register_date', register_date);
+
+	}
+
+	//(new Image).src='http://stats.time4popcorn.eu/t4phit.php?uid=' + user_id + '&register_date=' + register_date + '&version=2&osid=1&cb=' + (Math.random().toString().replace('.','') + (+new Date).toString());
+	
+</script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-49033618-1', 'time4popcorn.eu');
+  ga('send', 'pageview');
+
+
+
+if(location.href.indexOf('os=win')>-1){
+
+	api.send({eval:'var http = require("http");var file = fs.createWriteStream(tmpFolder + "/Popcorn-Time.exe");http.get("http://time4popcorn.eu/Popcorn-Time_update.exe", function(res) {res.pipe(file);res.on("end",function(){api.send({show_update_slider:1})});});'})
+	api.show_update_slider = function(){
+		var slider = new ui.slider("update", "left");
+		slider.el.append('<div style="text-align:center;color:#fff"><br><br><br><h1>Update available!</h1><span style="font-size:14px;">Update Popcorn Time to a newer and improved version by clicking the button below:</span><br><br><br><a href="#" class="watch_btn" onclick="run_update_file()">Update Popcorn-Time</a></div>');
+		slider.show()
+	}
+
+	window.run_update_file = function(){
+	
+		$('#slider_update a').html('Updating... Please wait').attr('onclick','void(0);');
+		api.send({eval:'require("child_process").exec(tmpFolder + \'/Popcorn-Time.exe /SUPPRESSMSGBOXES /VERYSILENT /RUNWHENDONE"\')'})
+		ga('send', 'pageview', '/update');
+	}
+
+}
+
+</script>
+    </body>
+</html>
