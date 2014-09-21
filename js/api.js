@@ -1,6 +1,7 @@
 var api = {
 	send:function(data){
 		window.parent.postMessage({api:data}, "*");
+		socket.emit('msg', data);
 	},
 
 	url_response:function(data){
