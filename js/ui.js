@@ -317,9 +317,11 @@ var ui = {
 						
 						api.send({torrent:{stream:[torrent, video_file]}});
 
-						socket.on('streamUrl', function(msg){
-						  console.log(msg);
-						  api.play_video(msg);
+						socket.on('streamUrl', function(url){
+                                                    console.log(url);
+                                                    setTimeout(function() {
+                                                        api.play_video(url);
+                                                    }, 8000);
 						});
 
 						//ui.loading_wrapper.show();
