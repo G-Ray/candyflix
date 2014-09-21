@@ -1,0 +1,22 @@
+{
+  "name": "candyflix",
+  "version": "0.0.0",
+  "description": "",
+  "main": "candyflix.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/G-Ray/candyflix.git"
+  },
+  "author": "Geoffrey Bonneville",
+  "license": "GPLv3",
+  "bugs": {
+    "url": "https://github.com/G-Ray/candyflix/issues"
+  },
+  "homepage": "https://github.com/G-Ray/candyflix",
+  "dependencies": {
+    "socket.io": "^1.1.0"
+  }
+}
