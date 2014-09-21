@@ -22,7 +22,7 @@ var api = {
 		}
 	},
 
-	play_video:function(data){
+	play_video:function(url){
 
 		ui.loading_wrapper.hide();
 		ui.cover.show();
@@ -34,7 +34,8 @@ var api = {
 			})
 		}
 
-		api.now_playing = data[0];
+		api.now_playing = url;
+
 		$('.cover').html('<video id="video_player" class="video-js vjs-default-skin vjs-big-play-centered" width="100%" height="100%"><source src="' + api.now_playing + '" type="video/mp4" />'+subtitles+'</video>');
 
 
@@ -50,16 +51,12 @@ var api = {
 
 
 				$('<div class="close">X</div>').appendTo('.vjs-default-skin').click(function(){
-					api.send({"eval":'if(win.isFullscreen){win.leaveFullscreen()}'})
 					ui.cover.hide()
 				});
 
 
 			}
 		);
-
-			
-		
 
 /*
 		api.playing = data ? data[0] : api.playing;

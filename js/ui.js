@@ -316,11 +316,12 @@ var ui = {
 						video_file 	= movie.torrents[idx].file;
 						
 						api.send({torrent:{stream:[torrent, video_file]}});
+						api.play_video('http://vjs.zencdn.net/v/oceans.mp4');
 
-						ui.loading_wrapper.show();
+						//ui.loading_wrapper.show();
 
 
-						setTimeout(function(){
+						/*setTimeout(function(){
 							if($('#loading_wrapper .msg').html()==''){
 								api.send({torrent:{stream_stop:true}});
 								ui.loading_wrapper.hide();
@@ -328,12 +329,11 @@ var ui = {
 								utils.msgbox('Error fetching this torrent! - Please try again or choose another one.')
 							}
 
-						},5000)
+						},5000)*/
 
 					})
 					
 					slider.show();
-					
 
 				}
 
@@ -671,7 +671,7 @@ var ui = {
 
 		watch_btn_click:function(){
 
-			ui.loading_wrapper.show();
+			//ui.loading_wrapper.show();
 
 			var
 			slider		= document.section.chosen[0].checked ? 'movie_slider' : 'tvshow_slider',
