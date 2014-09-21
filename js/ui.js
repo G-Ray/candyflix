@@ -316,7 +316,11 @@ var ui = {
 						video_file 	= movie.torrents[idx].file;
 						
 						api.send({torrent:{stream:[torrent, video_file]}});
-						api.play_video('http://vjs.zencdn.net/v/oceans.mp4');
+
+						socket.on('streamUrl', function(msg){
+						  console.log(msg);
+						  api.play_video(msg);
+						});
 
 						//ui.loading_wrapper.show();
 
