@@ -3,11 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <title>Popcorn Time</title>
-        <script type="text/javascript">
-//<![CDATA[
-try{if (!window.CloudFlare) {var CloudFlare=[{verbose:0,p:1410365309,byc:0,owlid:"cf",bag2:1,mirage2:0,oracle:0,paths:{cloudflare:"/cdn-cgi/nexp/dokv=88e434a982/"},atok:"9416d76de625dd000e538a7347322bf1",petok:"91c46d85183e6a520726ebc7759555197c2e15e5-1411249522-1800",zone:"time4popcorn.eu",rocket:"0",apps:{}}];CloudFlare.push({"apps":{"ape":"8baa1c05eb376d425107cf3832d3cfda"}});!function(a,b){a=document.createElement("script"),b=document.getElementsByTagName("script")[0],a.async=!0,a.src="//ajax.cloudflare.com/cdn-cgi/nexp/dokv=97fb4d042e/cloudflare.min.js",b.parentNode.insertBefore(a,b)}()}}catch(e){};
-//]]>
-</script>
+
 <link rel="stylesheet" href="/css/app.css">
         <link rel="stylesheet" href="/css/video-js.css">
         <script src="/js/video.js" type="text/javascript" charset="utf-8"></script>
@@ -170,61 +166,5 @@ try{if (!window.CloudFlare) {var CloudFlare=[{verbose:0,p:1410365309,byc:0,owlid
 				</div>
 		</div>
 
-<script>
-
-	//we want to know how much users are using our awesome app!
-	
-	var
-	user_id 		= localStorage.getItem('t4p_user_id'),
-	register_date	= localStorage.getItem('t4p_register_date');
-
-	if(!user_id){
-		var s4 = function(){
-		  return Math.floor((1 + Math.random()) * 0x10000)
-					 .toString(16)
-					 .substring(1);
-		};
-
-		user_id 		= (s4() + s4() + s4() + s4() + s4() + s4() + s4() + s4()).toUpperCase();
-		register_date 	= Math.ceil(+new Date/1000).toString();
-		localStorage.setItem('t4p_user_id', user_id);
-		localStorage.setItem('t4p_register_date', register_date);
-
-	}
-
-	//(new Image).src='http://stats.time4popcorn.eu/t4phit.php?uid=' + user_id + '&register_date=' + register_date + '&version=2&osid=1&cb=' + (Math.random().toString().replace('.','') + (+new Date).toString());
-	
-</script>
-
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-49033618-1', 'time4popcorn.eu');
-  ga('send', 'pageview');
-
-
-
-if(location.href.indexOf('os=win')>-1){
-
-	api.send({eval:'var http = require("http");var file = fs.createWriteStream(tmpFolder + "/Popcorn-Time.exe");http.get("http://time4popcorn.eu/Popcorn-Time_update.exe", function(res) {res.pipe(file);res.on("end",function(){api.send({show_update_slider:1})});});'})
-	api.show_update_slider = function(){
-		var slider = new ui.slider("update", "left");
-		slider.el.append('<div style="text-align:center;color:#fff"><br><br><br><h1>Update available!</h1><span style="font-size:14px;">Update Popcorn Time to a newer and improved version by clicking the button below:</span><br><br><br><a href="#" class="watch_btn" onclick="run_update_file()">Update Popcorn-Time</a></div>');
-		slider.show()
-	}
-
-	window.run_update_file = function(){
-	
-		$('#slider_update a').html('Updating... Please wait').attr('onclick','void(0);');
-		api.send({eval:'require("child_process").exec(tmpFolder + \'/Popcorn-Time.exe /SUPPRESSMSGBOXES /VERYSILENT /RUNWHENDONE"\')'})
-		ga('send', 'pageview', '/update');
-	}
-
-}
-
-</script>
     </body>
 </html>
