@@ -321,11 +321,21 @@ var ui = {
               console.log(url);
               setTimeout(function() {
                 api.play_video(url);
-              }, 8000);
+              }, 4000);
             });
 
-            //ui.loading_wrapper.show();
+            ui.loading_wrapper.show();
 
+            var percent = 0;
+            var loading = setInterval(function(){
+              percent += 100/3;
+              console.log(percent);
+              ui.loading_wrapper.change_stats(percent, 0,'Loading...');
+            }, 1000);
+
+            setTimeout(function() {
+              clearInterval(loading);
+            }, 4000);
 
             /*setTimeout(function(){
               if($('#loading_wrapper .msg').html()==''){
