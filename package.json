@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/G-Ray/candyflix",
   "dependencies": {
+    "getport": "^0.1.0",
     "socket.io": "^1.1.0"
   }
 }
