@@ -18,10 +18,10 @@ io.on('connection', function(socket){
         if (err) console.log(err);
         var child = spawn('peerflix', [msg.torrent.stream[0], '--port='+ port], {});
         child.stdout.on('data', function(data) {
-          console.log('stdout: ' + data);
+          //console.log('stdout: ' + data);
         });
         child.stderr.on('data', function(data) {
-            console.log('stderr: ' + data);
+          console.log('stderr: ' + data);
         });
 
         io.emit('streamUrl', 'http://localhost:' + port);
