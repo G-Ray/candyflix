@@ -24,7 +24,7 @@ io.on('connection', function(socket){
           console.log('stderr: ' + data);
         });
 
-        io.emit('streamUrl', 'http://localhost:' + port);
+        socket.emit('streamUrl', 'http://localhost:' + port);
       });
     }
   });
