@@ -38,13 +38,20 @@ fetcher.scrappers.t4p_movies = function(genre, keywords, page, callback){
 
 			try{
 					var torrents = {};
+
+					// Keep only yify releases
+					for(var i=movie.items.length-1; i>=0; i--) {
+						var torrent = movie.items[i];
+						if(torrent.file.indexOf('YIFY') === -1) {
+							movie.items.splice(i, 1);
+						}
+					}
+
 					movie.items.forEach(function(torrent){
 						if(torrent.type===0 && !torrents[torrent.quality]){
 							torrents[torrent.quality] = torrent.torrent_url
 						}
 					});
-
-
 
 					// Temporary object
 					var movieModel = {
