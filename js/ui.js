@@ -553,9 +553,26 @@ var ui = {
 
             api.send({torrent:{stream:[torrent, video_file]}});
 
+            socket.on('streamUrl', function(url){
+              console.log(url);
+              setTimeout(function() {
+                api.play_video(url);
+              }, 4000);
+            });
+
             ui.loading_wrapper.show();
 
-            setTimeout(function(){
+            var percent = 0;
+            var loading = setInterval(function(){
+              percent += 100/3;
+              console.log(percent);
+              ui.loading_wrapper.change_stats(percent, 0,'Loading...');
+            }, 1000);
+
+            setTimeout(function() {
+              clearInterval(loading);
+            }, 4000);
+            /*setTimeout(function(){
               if($('#loading_wrapper .msg').html()==''){
                 api.send({torrent:{stream_stop:true}});
                 ui.loading_wrapper.hide();
@@ -563,7 +580,7 @@ var ui = {
                 utils.msgbox('Error fetching this torrent! - Please try again or choose another one.')
               }
 
-            },5000)
+            },5000)*/
 
           })
 
