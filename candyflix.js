@@ -21,8 +21,7 @@ io.on('connection', function(socket){
 
   socket.on('msg', function(msg){
     console.log(msg);
-    if(msg['torrent']) {
-      console.log(msg.torrent.stream[1]);
+    if(msg['torrent'] && !msg['torrent'].stream_stop) {
 
       getport(function (err, port) {
         if (err) console.log(err);
