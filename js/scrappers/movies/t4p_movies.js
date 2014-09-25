@@ -42,7 +42,8 @@ fetcher.scrappers.t4p_movies = function(genre, keywords, page, callback){
 					// Keep only yify releases
 					for(var i=movie.items.length-1; i>=0; i--) {
 						var torrent = movie.items[i];
-						if(torrent.file.indexOf('YIFY') === -1) {
+						var file = torrent.file;
+						if(file.toLowerCase().indexOf('yify') === -1 || file.indexOf('1080p.3D') !== -1) {
 							movie.items.splice(i, 1);
 						}
 					}
