@@ -5,7 +5,7 @@ var api = {
 	},
 
 	url_response:function(data){
-		
+
 		if(typeof utils.url_response[data[0]]=='function'){
 			utils.url_response[data[0]](data[1]);
 			delete utils.url_response[data[0]];
@@ -30,6 +30,7 @@ var api = {
 
 		var subtitles = '';
 		if(api.subtitles instanceof Array){
+			console.log(api.subtitles);
 			api.subtitles.forEach(function(subs){
 				subtitles += '<track kind="subtitles" src="' + subs[0] + '" srclang="'+ subs[1] +'" label="' + subs[2].capitalize() + '" charset="utf-8">';
 			})
@@ -74,7 +75,7 @@ var api = {
 
 		$('#player').html();
 		try{
-	
+
 		}
 		catch(e){console.log(e)}
 */
@@ -85,7 +86,7 @@ var api = {
 
 		if(!d)
 			return;
-			
+
 
 		if(d[1]<1)
 			var msg = locale.translate('startingDownload');

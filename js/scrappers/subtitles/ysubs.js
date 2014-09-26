@@ -4,7 +4,11 @@ fetcher.scrappers.ysubs = function(movie_id, callback){
     baseUrl	= 'http://api.yifysubtitles.com/subs/',
     prefix 	= 'http://www.yifysubtitles.com';
 
-    utils.url_request(baseUrl + movie_id, function(json){
+    var url = baseUrl + movie_id;
+
+    // The server does the request
+    api.send({url_request:url});
+    socket.on('url_request', function(json) {
 
 		try{
 
@@ -38,6 +42,7 @@ fetcher.scrappers.ysubs = function(movie_id, callback){
 
 				}
 
+        console.log(subs_list);
 				callback(subs_list);
 			}
 			else

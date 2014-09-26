@@ -1,6 +1,7 @@
 var io = require('socket.io')();
 var spawn = require('child_process').spawn;
 var getport = require('getport');
+var request = require("request");
 
 var processes = {};
 
@@ -21,6 +22,15 @@ io.on('connection', function(socket){
 
   socket.on('msg', function(msg){
     console.log(msg);
+
+    if(msg['url_request']) {
+      var url = msg['url_request'];
+      request(url, function(error, response, body) {
+        console.log(body);
+        socket.emit('url_request', body);
+      });
+    }
+
     if(msg['torrent'] && !msg['torrent'].stream_stop) {
 
       getport(function (err, port) {
