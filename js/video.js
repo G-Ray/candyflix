@@ -1320,10 +1320,10 @@ vjs.findPosition = function(el) {
 vjs.util = {};
 
 /**
- * Merge two options objects, 
+ * Merge two options objects,
  * recursively merging any plain object properties as well.
  * Previously `deepMerge`
- * 
+ *
  * @param  {Object} obj1 Object to override values in
  * @param  {Object} obj2 Overriding object
  * @return {Object}      New object -- obj1 and obj2 will be untouched
@@ -7457,6 +7457,9 @@ vjs.TextTrack.prototype.load = function(){
     window.current_vjs = this_;
     var a = [this_.src_, this_.language_];
     api.send({getSubs:a})
+    socket.on('dataBuf', function(dataBuf) {
+      api.putSubs(dataBuf);
+    });
 
   }
 
@@ -7494,7 +7497,7 @@ vjs.TextTrack.prototype.load = function(){
 		  font_size = font_size - 3;
 		  $subs.css('font-size', font_size+'px');
     };
-    
+
 
 
 
@@ -7524,5 +7527,3 @@ vjs.TextTrack.prototype.load = function(){
         var btn = new videojs.smallerSubtitles(this, options);
         this.controlBar.el().appendChild(btn.el());
     });
-
-
