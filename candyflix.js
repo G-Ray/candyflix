@@ -76,19 +76,14 @@ io.on('connection', function(socket){
       console.log(msg['getSubs'][0]);
       request({url: msg['getSubs'][0], encoding: null}, function(error, response, data){
         if (!error && response.statusCode == 200) {
-          //console.log(data);
           var path = require('path');
-          if (path.extname(msg['getSubs'][0]) === '.zip') {
-            console.log("ZIP");
-              decompress(data, function(dataBuf) {
-                console.log("DECOMPRESSED")
-                //console.log(dataBuf.toString('utf-8'));
-                //socket.emit('dataBuf', dataBuf.toString('utf-8'));
-                decode(dataBuf, msg['getSubs'][1], function(dataBuff) {
-                  socket.emit('dataBuf', dataBuff);
-                });
-            });
-          }
+
+          decompress(data, function(dataBuf) {
+              decode(dataBuf, msg['getSubs'][1], function(dataBuff) {
+                socket.emit('dataBuf', dataBuff);
+              });
+          });
+
         }else{
           console.log('Failed to download subtitle!', error, response);
         }
