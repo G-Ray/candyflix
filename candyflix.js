@@ -141,7 +141,8 @@ io.on('connection', function(socket){
         console.log(processes);
         console.log("#####################");
 
-        socket.emit('streamUrl', 'http://localhost:' + port);
+        var hostname = hostname = socket.handshake.headers.host.split(":").shift();
+        socket.emit('streamUrl', 'http://' + hostname + ':' + port);
       });
     }
   });
