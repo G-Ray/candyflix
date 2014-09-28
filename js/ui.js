@@ -326,7 +326,6 @@ var ui = {
             api.send({torrent:{stream:[torrent, video_file]}});
 
             socket.on('streamUrl', function(url){
-              console.log(url);
               setTimeout(function() {
                 api.play_video(url);
               }, 4000);
@@ -337,7 +336,6 @@ var ui = {
             var percent = 0;
             var loading = setInterval(function(){
               percent += 100/3;
-              console.log(percent);
               ui.loading_wrapper.change_stats(percent, 0,'Loading...');
             }, 1000);
 

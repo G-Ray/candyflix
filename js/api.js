@@ -30,7 +30,6 @@ var api = {
 
 		var subtitles = '';
 		if(api.subtitles instanceof Array){
-			console.log(api.subtitles);
 			api.subtitles.forEach(function(subs){
 				subtitles += '<track kind="subtitles" src="' + subs[0] + '" srclang="'+ subs[1] +'" label="' + subs[2].capitalize() + '" charset="utf-8">';
 			})

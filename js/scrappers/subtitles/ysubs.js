@@ -42,7 +42,6 @@ fetcher.scrappers.ysubs = function(movie_id, callback){
 
 				}
 
-        console.log(subs_list);
 				callback(subs_list);
 			}
 			else
