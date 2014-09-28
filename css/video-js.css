@@ -731,6 +731,7 @@ body.vjs-full-window {
   /* Leave padding on left and right */
   left: 1em;
   right: 1em;
+  font-size: 22px
 }
 /* Move captions down when controls aren't being shown */
 .video-js.vjs-user-inactive.vjs-playing .vjs-text-track-display {
