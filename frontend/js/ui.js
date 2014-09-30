@@ -325,7 +325,8 @@ var ui = {
 
             api.send({torrent:{stream:[torrent, video_file]}});
 
-            socket.once('streamUrl', function(url){
+            socket.once('streamUrl', function(port){
+              var url = document.URL.substring(0, document.URL.length - 1) + ':' + port
               console.log(url);
               setTimeout(function() {
                 api.play_video(url);
