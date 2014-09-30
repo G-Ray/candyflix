@@ -8,7 +8,7 @@ fetcher.scrappers.ysubs = function(movie_id, callback){
 
     // The server does the request
     api.send({url_request:url});
-    socket.on('url_request', function(json) {
+    socket.once('url_request', function(json) {
 
 		try{
 
