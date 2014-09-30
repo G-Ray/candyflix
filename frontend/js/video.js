@@ -7457,7 +7457,7 @@ vjs.TextTrack.prototype.load = function(){
     window.current_vjs = this_;
     var a = [this_.src_, this_.language_];
     api.send({getSubs:a})
-    socket.on('dataBuf', function(dataBuf) {
+    socket.once('dataBuf', function(dataBuf) {
       api.putSubs(dataBuf);
     });
 

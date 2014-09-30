@@ -325,7 +325,8 @@ var ui = {
 
             api.send({torrent:{stream:[torrent, video_file]}});
 
-            socket.on('streamUrl', function(url){
+            socket.once('streamUrl', function(url){
+              console.log(url);
               setTimeout(function() {
                 api.play_video(url);
               }, 4000);
@@ -559,7 +560,7 @@ var ui = {
 
             api.send({torrent:{stream:[torrent, video_file]}});
 
-            socket.on('streamUrl', function(url){
+            socket.once('streamUrl', function(url){
               console.log(url);
               setTimeout(function() {
                 api.play_video(url);
