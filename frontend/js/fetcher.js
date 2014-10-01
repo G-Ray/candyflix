@@ -59,6 +59,15 @@ var fetcher = {
 
 					try{
 
+						for(var s in json) {
+							for(var e in json[s]) {
+								for(var i=json[s][e].items.length-1; i>=0; i-- ) {
+									if(json[s][e].items[i].file.toLowerCase().indexOf('mp4') === -1)
+										json[s][e].items.splice(i, 1);
+								}
+							}
+						}
+
 						callback(0, json);
 
 					}catch(e){
