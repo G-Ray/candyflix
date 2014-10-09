@@ -272,14 +272,13 @@ var ui = {
             var html = $('#torrent_option_html').html();
 
             // Swap torrents if 720p is not in first position
-            if(movie.torrents[0].quality !== '720p') {
+            if(movie.torrents.length>1 && movie.torrents[0].quality !== '720p') {
               var tmp = movie.torrents[1];
               movie.torrents[1] = movie.torrents[0]
               movie.torrents[0] = tmp;
             }
 
             for(var i=0;i<movie.torrents.length;i++){
-
               var option = utils.tokenizer({
                 quality:  movie.torrents[i].quality,
                 peers:    movie.torrents[i].torrent_seeds + ' Seeds, &nbsp;' + movie.torrents[i].torrent_peers + ' Peers',
