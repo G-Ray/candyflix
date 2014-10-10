@@ -59,7 +59,7 @@ ul>li{position:relative;float:left;}
 
 #home{height:100%}
 #container{
-		
+
 	height:calc(100% - 60px);
 	overflow:auto;
 	background:#282827;
@@ -74,7 +74,7 @@ ul>li{position:relative;float:left;}
 	top:32px;
 	margin-left:-75px;
 	z-index:11;
-	
+
 }
 
 #header #toolbar{
@@ -132,7 +132,7 @@ ul>li{position:relative;float:left;}
 	padding:0 15px;
 	cursor:pointer;
 	float:left;
-	
+
 }
 
 #toolbar .section_indicator.activated{
@@ -269,7 +269,7 @@ ul>li{position:relative;float:left;}
 
 
 #movies_catalog .movie{
-	
+
 	opacity:0;
 	margin:6px;
 	float:left;
@@ -405,7 +405,7 @@ ul>li{position:relative;float:left;}
 	transition-property: opacity;
 	transition-duration: 0.2s;
 	transition-timing-function: linear;
-	
+
 }
 
 .slider{
@@ -422,11 +422,11 @@ ul>li{position:relative;float:left;}
 -moz-box-shadow:    0px 0px 15px 7px rgba(0, 0, 0, 0.85);
 box-shadow:         0px 0px 15px 7px rgba(0, 0, 0, 0.85);
 
-	
+
 	transition-property: all;
 	transition-duration: 0.24s;
 	transition-timing-function: linear;
-	
+
 }
 
 .slider.bottom{
@@ -458,7 +458,7 @@ box-shadow:         0px 0px 15px 7px rgba(0, 0, 0, 0.85);
 	-webkit-box-shadow: -6px 0px 15px 0px rgba(0, 0, 0, 0.78);
 	-moz-box-shadow:    -6px 0px 15px 0px rgba(0, 0, 0, 0.78);
 	box-shadow:         -6px 0px 15px 0px rgba(0, 0, 0, 0.78);
-	
+
 }
 
 
@@ -466,7 +466,7 @@ box-shadow:         0px 0px 15px 7px rgba(0, 0, 0, 0.85);
 
 	width:100%;
 	height:100%;
-	
+
 }
 
 .slider.movie .content{
@@ -594,7 +594,7 @@ box-shadow:         0px 0px 15px 7px rgba(0, 0, 0, 0.85);
 	line-height:16px;
 	margin-bottom:10px;
 	color:#bbb;
-	
+
 }
 
 .slider.tvshow .actors{
@@ -711,7 +711,7 @@ box-shadow:         0px 0px 15px 7px rgba(0, 0, 0, 0.85);
 .slider.tvshow .episode_title{
 	margin-top:5px;
 	font-size:30px;
-	
+
 }
 
 .slider.tvshow .episode_description{
@@ -771,7 +771,7 @@ box-shadow:         0px 0px 15px 7px rgba(0, 0, 0, 0.85);
 	z-index:10;
 
 	border-bottom-left-radius:40px;
-		
+
 	-webkit-box-shadow: -1px 2px 10px 0px rgba(50, 50, 50, 0.75);
 	-moz-box-shadow:    -1px 2px 10px 0px rgba(50, 50, 50, 0.75);
 	box-shadow:         -1px 2px 10px 0px rgba(50, 50, 50, 0.75);
@@ -1028,8 +1028,8 @@ a.watch_btn:hover {
   -webkit-animation-fill-mode: forwards;
   -webkit-transform-origin: ;
 
-  height:130px;
-  width:130px;
+  height:362px;
+  width:256px;
 }
 
 @-webkit-keyframes animationFrames {
@@ -1064,6 +1064,6 @@ a.watch_btn:hover {
     -webkit-transform:  rotate(5deg) ;
   }
   100% {
-	
+
   }
 }
