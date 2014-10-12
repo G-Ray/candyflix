@@ -99,23 +99,23 @@ ul>li{position:relative;float:left;}
 	color:#B7B9BB;
 	font-size:16px;
 	height:100%;
-	line-height:40px;
+	line-height:45px;
 	cursor:pointer;
 	position:absolute;
 	z-index:11;
 	right:12px;
 	bottom:10px;
-	font-size:12px;
+	font-size:16px;
 }
 
 #search_input{
 	background:rgba(0,0,0,0.5);
-	border-radius: 6px;
-	border:1px #858585 solid;
+	border-radius: 10px;
+	border:2px #858585 solid;
 	color: #fff;
-	font-size: 12px;
-	height: 20px;
-	width: 170px;
+	font-size: 16px;
+	height: 25px;
+	width: 200px;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 	-webkit-appearance: textfield;
