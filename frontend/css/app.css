@@ -903,6 +903,15 @@ a.watch_btn:hover {
 	z-index:11;
 }
 
+#loading_wrapper p{
+	-webkit-touch-callout: text;
+	-webkit-user-select: text;
+	-khtml-user-select: text;
+	-moz-user-select: text;
+	-ms-user-select: text;
+	user-select: text;
+}
+
 #loading_wrapper .pocholin{
 	text-align:center;
 }

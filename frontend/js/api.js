@@ -23,6 +23,17 @@ var api = {
 		}
 	},
 
+	downloadSub:function(url, lang) {
+		var a = [url, lang];
+		api.send({getSubs: a})
+		socket.once('dataBuf', function(dataBuf) {
+			var pom = document.createElement('a');
+			pom.setAttribute('download', lang + '.srt');
+			pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(dataBuf));
+			pom.click();
+		});
+	},
+
 	play_video:function(url){
 
 		ui.loading_wrapper.hide();

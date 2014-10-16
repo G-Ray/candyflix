@@ -563,12 +563,35 @@ var ui = {
             socket.once('streamUrl', function(port){
               var url = document.URL.substring(0, document.URL.length - 1) + ':' + port
               console.log(url);
+              console.log(video_file);
+
               setTimeout(function() {
-                api.play_video(url);
+                // The file can't be played in the browser
+                if(video_file.toLowerCase().indexOf('mkv') !== -1) {
+                  $('.pocholin').hide();
+                  $('.progress_bar').hide();
+                  $('.msg').hide();
+                  $('.percentage').hide();
+                  $('#loading_wrapper').append('<p style="center; font-size:20px; color:#787878;">Cette vidéo ne peut être lue dans le navigateur. Veuillez ouvrir l\'adresse suivante avec un logiciel comme vlc et conserver cette page ouverte <br /><br />' +  url + ' <br /><br /> Télécharger les sous-titres ici (à glisser-déposer dans VLC):</p>');
+                  for(var s in api.subtitles) {
+                    $('#loading_wrapper').append('<a style="center; font-size:20px; color:#787878;" onclick=api.downloadSub("' + api.subtitles[s][0] + '","' + api.subtitles[s][1] + '") href="#">' + api.subtitles[s][2] + '|' + '</a>');
+                    if(s%6==0 && s!=0)
+                      $('#loading_wrapper').append('<br />');
+                  }
+                }
+                else {
+                  api.play_video(url);
+                }
               }, 4000);
             });
 
+            $('.pocholin').show();
+            $('.progress_bar').show();
+            $('.msg').show();
+            $('.percentage').show();
             ui.loading_wrapper.show();
+            $('#loading_wrapper p').hide();
+            $('#loading_wrapper a').hide();
 
             var percent = 0;
             var loading = setInterval(function(){
