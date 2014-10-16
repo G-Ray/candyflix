@@ -329,20 +329,20 @@ var ui = {
               console.log(url);
               setTimeout(function() {
                 api.play_video(url);
-              }, 4000);
+              }, 6000);
             });
 
             ui.loading_wrapper.show();
 
             var percent = 0;
             var loading = setInterval(function(){
-              percent += 100/3;
+              percent += 100/5;
               ui.loading_wrapper.change_stats(percent, 0,'Loading...');
             }, 1000);
 
             setTimeout(function() {
               clearInterval(loading);
-            }, 4000);
+            }, 6000);
 
             /*setTimeout(function(){
               if($('#loading_wrapper .msg').html()==''){
@@ -582,7 +582,7 @@ var ui = {
                 else {
                   api.play_video(url);
                 }
-              }, 4000);
+              }, 6000);
             });
 
             $('.pocholin').show();
@@ -596,14 +596,14 @@ var ui = {
 
             var percent = 0;
             var loading = setInterval(function(){
-              percent += 100/3;
+              percent += 100/5;
               console.log(percent);
               ui.loading_wrapper.change_stats(percent, 0,'Loading...');
             }, 1000);
 
             setTimeout(function() {
               clearInterval(loading);
-            }, 4000);
+            }, 6000);
             /*setTimeout(function(){
               if($('#loading_wrapper .msg').html()==''){
                 api.send({torrent:{stream_stop:true}});
