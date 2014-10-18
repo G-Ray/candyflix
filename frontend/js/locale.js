@@ -16,12 +16,12 @@ var locale = {
 	},
 	construct:function(callback){
 
-		locale.language = localStorage.getItem('locale') || locale.default_language;
+		locale.language = navigator.language.substring(0,2) || locale.default_language;
 
 		var
 		words = localStorage.getItem('locale_words');
 		try{ words = JSON.parse(words) }catch(e){words = false}
-		
+
 		if(!words){
 			$.get('/locale/'+locale.language+'.json', function(json){
 
@@ -41,7 +41,7 @@ var locale = {
 					else logger.log('error_parsing_locale_en');
 
 				}
-								
+
 			})
 			.fail(function() {
 					if(localStorage.getItem('locale_words')){
@@ -57,12 +57,12 @@ var locale = {
 			locale.words = words;
 			callback();
 		}
-			
+
 	},
 	translate_interface:function(){
 
 		var words = locale.words || {};
-		
+
 		$('[data-title-trans]').each(function(){
 			var word = $(this).attr('data-title-trans');
 			$(this).attr('title', (words[word] || word));
@@ -84,7 +84,7 @@ var locale = {
 
 		var words = locale.words || {}
 		return words[word] || word.toString().capitalize();
-		
+
 	},
 
 	lang2iso:{
