@@ -592,6 +592,7 @@ var ui = {
             ui.loading_wrapper.show();
             $('#loading_wrapper p').hide();
             $('#loading_wrapper a').hide();
+            $('#loading_wrapper br').hide();
 
             var percent = 0;
             var loading = setInterval(function(){
