@@ -31,7 +31,9 @@
   "close_window":"proche ",
   "error":"erreur",
   "season":"saison",
-  "no_movies":"pas trouvé de film",
+  "no_movies":"Aucun films trouvés",
+	"vlc_msg_1": "Cette vidéo ne peut pas être lue dans le navigateur. Merci d'ouvrir l'adresse suviante avec VLC (Media>Ouvrir un flux réseau) ou un logiciel similaire, et de conserver cette page ouverte.",
+	"vlc_msg_2": "Téléchargez les sous-titres que vous voulez, et glissez-déposez les dans la fenêtre de VLC.",
 
 
     "all": "Populaire",

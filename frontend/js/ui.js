@@ -572,7 +572,7 @@ var ui = {
                   $('.progress_bar').hide();
                   $('.msg').hide();
                   $('.percentage').hide();
-                  $('#loading_wrapper').append('<p style="center; font-size:20px; color:#787878;">Cette vidéo ne peut être lue dans le navigateur. Veuillez ouvrir l\'adresse suivante avec un logiciel comme vlc et conserver cette page ouverte <br /><br />' +  url + ' <br /><br /> Télécharger les sous-titres ici (à glisser-déposer dans VLC):</p>');
+                  $('#loading_wrapper').append('<p style="center; font-size:20px; color:#787878;">' + locale.translate('vlc_msg_1') +  '<br /><br />' +  url + ' <br /><br />' + locale.translate('vlc_msg_2') + '</p>');
                   for(var s in api.subtitles) {
                     $('#loading_wrapper').append('<a style="center; font-size:20px; color:#787878;" onclick=api.downloadSub("' + api.subtitles[s][0] + '","' + api.subtitles[s][1] + '") href="#">' + api.subtitles[s][2] + '|' + '</a>');
                     if(s%6==0 && s!=0)
