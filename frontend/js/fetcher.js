@@ -64,6 +64,7 @@ var fetcher = {
 								for(var i=json[s][e].items.length-1; i>=0; i-- ) {
 									if(json[s][e].items[i].file.toLowerCase().indexOf('avi') !== -1)
 										json[s][e].items.splice(i, 1);
+									else json[s][e].items[i].quality += ' (' + json[s][e].items[i].file.split('.').pop() + ')';
 								}
 							}
 						}
