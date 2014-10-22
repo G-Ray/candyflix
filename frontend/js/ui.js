@@ -567,7 +567,7 @@ var ui = {
 
               setTimeout(function() {
                 // The file can't be played in the browser
-                if(video_file.toLowerCase().indexOf('mkv') !== -1) {
+                if(video_file.toLowerCase().indexOf('mp4') === -1) {
                   $('.pocholin').hide();
                   $('.progress_bar').hide();
                   $('.msg').hide();
