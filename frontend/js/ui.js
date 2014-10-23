@@ -326,7 +326,6 @@ var ui = {
 
             socket.once('streamUrl', function(port){
               var url = document.URL.substring(0, document.URL.length - 1) + ':' + port
-              console.log(url);
               setTimeout(function() {
                 api.play_video(url);
               }, 6000);
@@ -562,8 +561,6 @@ var ui = {
 
             socket.once('streamUrl', function(port){
               var url = document.URL.substring(0, document.URL.length - 1) + ':' + port
-              console.log(url);
-              console.log(video_file);
 
               setTimeout(function() {
                 // The file can't be played in the browser
@@ -597,7 +594,6 @@ var ui = {
             var percent = 0;
             var loading = setInterval(function(){
               percent += 100/5;
-              console.log(percent);
               ui.loading_wrapper.change_stats(percent, 0,'Loading...');
             }, 1000);
 
