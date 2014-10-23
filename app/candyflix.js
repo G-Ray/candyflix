@@ -8,10 +8,10 @@ var subtitles = require('./subtitles.js');
 var processes = {};
 
 io.on('connection', function(socket){
-  console.log('a user connected');
+  console.log("Connected users : " + io.sockets.sockets.length);
 
   socket.on('disconnect', function(){
-    console.log('user disconnected');
+    console.log("Connected users : " + io.sockets.sockets.length);
 
     if(socket.playing) { // There was already a stream running
       processes[socket.playing].spectators--;
@@ -87,9 +87,11 @@ io.on('connection', function(socket){
 
         socket.playing = msg.torrent.stream[1];
 
-        console.log("##RUNNING PROCESSES##");
-        console.log(processes);
-        console.log("#####################");
+        console.log("------------------RUNNING PROCESSES------------------");
+        for(var p in processes) {
+          console.log(p + " | Port:" + processes[p].port + " | Spectators: " + processes[p].spectators);
+        }
+        console.log("-----------------------------------------------------");
 
         socket.emit('streamUrl', port);
       });
