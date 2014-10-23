@@ -8,7 +8,6 @@ var ui = {
     $('#titlebar_buttons button').click(function(){
       var obj = {win:{}}
       obj.win[$(this).attr('id')]=true;
-      api.send(obj)
     })
 
     $('#toolbar .section_indicator').click(function(){
@@ -75,12 +74,6 @@ var ui = {
     });
 
     $('#search_bar .icon').click(ui.home.catalog.show)
-
-    api.send({dragger:{areas:[
-      ['calc(100% - 48px)','35px',0,0],
-      ['calc(100% - 472px)','30px;','30px','302px']
-    ]}})
-
 
     ui.home.catalog.center();
 
@@ -704,7 +697,7 @@ var ui = {
       ui.loading_wrapper.change_stats(0,0,'');
       document.getElementById('loading_wrapper').style.display='inline';
       ui.cover.show(function(){
-        api.send({torrent:{stream_stop:true}});
+        //api.send({torrent:{stream_stop:true}});
         ui.loading_wrapper.hide();
       });
     },

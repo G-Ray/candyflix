@@ -1,9 +1,9 @@
 var utils = {
 
 	load_script:function(src, callback) {
-	
+
 		var script = document.createElement('script'), loaded;
-		
+
 		script.setAttribute('src', src);
 		if (callback) {
 		  script.onreadystatechange = script.onload = function() {
@@ -38,7 +38,7 @@ var utils = {
 			var
 			p_rating = Math.round(rate.toFixed(1)) / 2,
 			stars = '';
-			
+
 			for (var i = 1; i <= Math.floor(p_rating); i++){
 				stars += '<span class="icon star"></span>';
 			}
@@ -68,7 +68,7 @@ var utils = {
 
 		utils.url_response[url] = callback;
 		api.send({url_request:url})
-		
+
 		//$.get(url,callback);
 
 	},

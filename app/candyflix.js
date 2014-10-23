@@ -23,7 +23,6 @@ io.on('connection', function(socket){
   });
 
   socket.on('msg', function(msg){
-    console.log(msg);
 
     if(msg['getSubs']) {
       console.log(msg['getSubs'][0]);
@@ -46,7 +45,6 @@ io.on('connection', function(socket){
     if(msg['url_request']) {
       var url = msg['url_request'];
       request(url, function(error, response, body) {
-        console.log(body);
         socket.emit('url_request', body);
       });
     }
@@ -79,7 +77,6 @@ io.on('connection', function(socket){
 
         processes[msg.torrent.stream[1]].spectators++;
 
-        console.log(socket.playing);
         if(socket.playing) { // There was already a stream running
           processes[socket.playing].spectators--;
           if(processes[socket.playing].spectators === 0) {
