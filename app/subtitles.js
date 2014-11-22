@@ -36,7 +36,7 @@ module.exports = {
     // We do
     } else {
       var iconv = require('iconv-lite');
-      var langInfo = langcodes[language] || {};
+      var langInfo = langcodes.langcodes[language] || {};
       console.log("SUB charset expected: "+langInfo.encoding);
       if (langInfo.encoding !== undefined && langInfo.encoding.indexOf(detectedEncoding) < 0) {
         // The detected encoding was unexepected to the language, so we'll use the most common
