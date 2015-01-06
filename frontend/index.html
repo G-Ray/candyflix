@@ -1,171 +1,336 @@
 <!doctype html>
-<html>
-    <head>
+<html manifest="/cache.manifest">
+    
+
+<head>
         <meta charset="UTF-8">
         <title>Candyflix</title>
+        <script type="text/javascript">
 
-<link rel="icon" type="image/png" href="favicon.png" />
-<link rel="stylesheet" href="/css/app.css">
-        <link rel="stylesheet" href="/css/video-js.css">
-        <script src="/js/video.js" type="text/javascript" charset="utf-8"></script>
-        <script src="/js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="/js/api.js" type="text/javascript" charset="utf-8"></script>
-        <script src="/js/locale.js" type="text/javascript" charset="utf-8"></script>
-        <script src="/js/app.js" type="text/javascript" charset="utf-8"></script>
-        <script src="/js/ui.js" type="text/javascript" charset="utf-8"></script>
-        <script src="/js/fetcher.js" type="text/javascript" charset="utf-8"></script>
-        <script src="/js/utils.js" type="text/javascript" charset="utf-8"></script>
-        <script src="/js/scrappers/movies/t4p_movies.js" type="text/javascript" charset="utf-8"></script>
-        <script src="/js/scrappers/tv/t4p_tv.js?" type="text/javascript" charset="utf-8"></script>
-        <script src="/js/scrappers/subtitles/ysubs.js" type="text/javascript" charset="utf-8"></script>
-        <script src="/js/scrappers/subtitles/torrentsapi.js" type="text/javascript" charset="utf-8"></script>
-        <script src="/socket.io/socket.io.js"></script>
-        <script>var socket = io();</script>
+</script>
+<link rel="stylesheet" href="css/app8132.css?cb=5">
+        <script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/iscroll.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/mousetrap.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/api.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/locale.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/appf1b1.js?cb=6" type="text/javascript" charset="utf-8"></script>
+        <script src="js/app.configf3de.js?cb=3" type="text/javascript" charset="utf-8"></script>
+        <script src="js/app.keyboardNav0f28.js?cb=1" type="text/javascript" charset="utf-8"></script>
+        <script src="js/app.favs.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/app.history.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/ui0e98.js?cb=4" type="text/javascript" charset="utf-8"></script>
+        <script src="js/ui.movies.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/ui.tv_show.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/ui.vpn_pagec08b.js?cb=2" type="text/javascript" charset="utf-8"></script>
+        <script src="js/ui.settings_page0f28.js?cb=1" type="text/javascript" charset="utf-8"></script>
+        <script src="js/ui.loading_wrapper0f28.js?cb=1" type="text/javascript" charset="utf-8"></script>
+        <script src="js/fetcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/utils.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/scrappers/movies/t4p_movies10e5.js?cb=0" type="text/javascript" charset="utf-8"></script>
+        <script src="js/scrappers/movies/yts.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/scrappers/movies/anime0f28.js?cb=1" type="text/javascript" charset="utf-8"></script>
+        <script src="js/scrappers/tv/t4p_tv.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/scrappers/tv/anime0f28.js?cb=1" type="text/javascript" charset="utf-8"></script>
+        <script src="js/scrappers/subtitles/ysubs.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/scrappers/subtitles/torrentsapi.js" type="text/javascript" charset="utf-8"></script>
     </head>
     <body>
-		<div id="home">
 
-				<div id="header">
+		<div id="titlebar_buttons">
+			<div id="min" data-title-trans="min_window"></div>
+			<div id="max" data-title-trans="max_window"></div>
+			<div id="close" data-title-trans="close_window"></div>
+		</div>
 
-					<div id="titlebar_buttons">
-						<button id="min" data-title-trans="min_window" title="Minimize window"></button>
-						<button id="max" data-title-trans="max_window" title="Maximize window"></button>
-						<button id="close" data-title-trans="close_window" title="Close"></button>
-					</div>
 
-					<img src="/images/candyflix-logo.png" id="logo">
+		<div id="header">
 
-					<div id="toolbar">
-						<div id="toolbar_movies" class="toolbar_btn clickable bold section_indicator activated" data-section="movies""><span data-in-trans="movies">Movies</span></div>
-						<div id="toolbar_tv" class="toolbar_btn bold clickable section_indicator" data-section="tv"><span data-in-trans="tv_shows">TV shows</span></div>
-						<div id="toolbar_genres" class="toolbar_btn clickable"><span data-in-trans="Genre">Genre</span>:&nbsp; <span class="selection_title" data-in-trans="all">All</span> &nbsp;<span class="icon caret-down"></span></div>
-						<!--<div id="toolbar_sort" class="toolbar_btn clickable"><span data-in-trans="sortBy">Sort By</span>:&nbsp; <span class="selection_title" data-in-trans="seeds">Popularity</span> <span class="icon caret-down"></span></div>-->
-					</div>
-
-					<div id="search_bar">
-						<input type="text" data-ph-trans="search" id="search_input">
-						<span class="icon search"></span>
-					</div>
+			<div id="toolbar" class="nav sections">
+				<div class="btn movies activated" data-section="movies">
+					<div class="icon2 film"></div>
+					<span data-in-trans="movies">Movies</span>
 				</div>
-
-				<div id="container">
-					<div id="movies_catalog"></div>
+				<div class="btn tv" data-section="tv">
+					<div class="icon2 tv"></div>
+					<span data-in-trans="tv_shows">TV shows</span>
 				</div>
 			</div>
 
-		<div id="genres_box"></div>
-		<div id="msg"><div></div></div>
+			<div id="logo"></div>
+
+			<div id="menu_panel">
+				<div class="icon info" onclick="ui.about_page.show();"></div>
+				<div class="icon2 settings" onclick="ui.settings_page.show()"></div>
+				<div class="icon unlocked vpn" onclick="ui.vpn_page.show()"></div>
+				<div class="icon heart favs" onclick="app.favs.show()"></div>
+
+				<div id="search_cont">
+					<div class="icon search"></div>
+					<div id="autocomplete"></div>
+					<input type="text" id="search_input" tabindex="-1" placeholder="Search...">
+				</div>
+
+			</div>
+		</div>
+
+
+		<div class="container" id="catalog">
+
+				<div id="movies_catalog">
+					<div id="catalog_scroller"></div>
+				</div>
+
+		</div>
+
+		<div id="menu_teaser">
+			<div></div>
+			<div></div>
+		</div>
+
+		<div id="history_panel">
+			<div class="incont">
+				<div id="history_cont">
+					<div class="incont">
+						<div class="scroller"></div>
+					</div>
+				</div>
+
+				<div class="caption" data-in-trans="history">History</div>
+
+			</div>
+		</div>
+
+
+		<div id="bottom_panel">
+			<input tabindex="-1" type="range" value="10" min="0" max="125" onchange="ui.home.catalog.set_sizes(this.value);this.blur();" id="size_setter">
+		</div>
+
+		<div id="side_menu">
+			<div class="incont">
+				<div id="sidetools">
+					<div id="genres_box">
+
+					</div>
+					<div id="sortby_box">
+						<div style="font-size:11px;color:#fff"><b>Sort By:</b>&nbsp;
+							<select tabindex="-1" id="select_sortby" onchange="app.config.fetcher.sortBy=this.value;ui.home.catalog.show()">
+								<option value="seeds">Popularity</option>
+								<option value="dateadded">Date added</option>
+								<option value="year">Year</option>
+								<option value="title">Title</option>
+							</select>
+						</div>
+					</div>
+				</div>
+
+				<div id="mode_box">
+					<span class="activated" data-mode="imdb">IMDb</span> &nbsp;&#183;&nbsp; <span data-mode="anime">Anime</span> &nbsp;&#183;&nbsp; <span data-mode="cartoons">Cartoons</span>
+				</div>
+
+			</div>
+		</div>
 
 		<div id="loading_wrapper">
-			<div class="pocholin"><img src="/images/candyfloss.png" class="pocholin_rotation"></div>
-			<div></div>
-			<div class="progress_bar"><div class="fill"></div></div>
-			<div class="msg"></div>
-			<div class="percentage"></div>
+			<div class="incont">
+				<div class="close" onclick="ui.loading_wrapper.hide()"></div>
+
+				<div class="displays">
+					<div class="percents">0%</div>
+				</div>
+				<div class="bars_cont"></div>
+
+					<div class="peers"><span class="val"></span> &nbsp; <span style="font-family:opensansbold">Peers</span></div>
+					<div class="speed"><span style="font-family:opensansbold">Speed</span> &nbsp; <span class="val"></span></div>
+					<div class="msg"></div>
+			</div>
 		</div>
 
-
+		<div class="gloss"></div>
+		<div class="gloss2"></div>
 		<div id="html_resource">
+
 				<div id="movie_cover_html">
-					<div class="movie_poster">[##poster_img##]
+
+						[##poster_img##]
+
 						<div class="poster_slide">
-							<div class="watch"><span class="icon eye"></span></div>
-							<div class="runtime">[##runtime##] <span data-in-trans="minutes"></span></div>
-							<div class="stars">
-								[##stars##]
+							<div class="poster_slide_cont">
+								<div class="poster_slide_bg"></div>
+								<div class="poster_slide_details">
+									<div class="title" style="font-size:[##titleFontSize##]px">
+										[##title##]
+										<div class="year" style="font-size:[##yearFontSize##]px"><span onclick="app.favs.toggle('[##id##]')" class="icon2 heart fav-btn [##infavs##]"></span> &nbsp; [##year##]</div>
+									</div>
+
+									<div class="details">
+										<div class="tools" style="display:none;font-size:[##toolsFontSize##]px"> <span class="icon2 heart fav-btn [##infavs##]"></span> &nbsp;<span class="icon2 download"></span></div>
+										<div class="stars" style="font-size:[##starsFontSize##]px">[##stars##]</div>
+									</div>
+								</div>
+
 							</div>
 						</div>
-					</div>
-					<div class="movie_title">[##title##]</div>
-					<div class="movie_year">[##year##]</div>
+
 				</div>
 
 
-				<div id="movie_page_html">
-						<div class="movie_poster"></div>
-						<div class="content">
-							<div class="title">[##title##]</div>
-							<div class="details">
-								<ul>
-									<li class="detail year">[##year##]</li>
-									<li class="sep"></li>
-									<li class="detail runtime">[##runtime##]</li>
-									<li class="sep"></li>
-									<li class="detail genre">[##genre##]</li>
-									<li class="sep"></li>
-									<li class="detail stars">[##stars##]</li>
-								</ul>
-								<div style="clear:both"></div>
+				<!-- start of movie slider -->
+				<div id="movie_slider_html">
+					<div class="backdrop"></div>
+					<div class="bottom_toolbox"></div>
+
+					<div id="watch_toolbox">
+						<div class="toolbox_content">
+							<div class="sep">
+								<div class="watch-btn" onclick="ui.movies.watch()">
+									<div class="icon2 play"></div>
+									<div class="caption" data-in-trans="watchItNow">WATCH IT NOW</div>
+								</div>
 							</div>
-							<div class="trailer_bar">
-								<div class="trailer_btn"><span>►</span> &nbsp;<span data-in-trans="trailer">Trailer</span></div>
+							<div class="sep">
+								<div class="quality_selector 1080p" data-quality="1080p">&nbsp;</div>
+								<div class="quality_selector 720p" data-quality="720p">&nbsp;</div>
+								<div class="quality_selector 3d" data-quality="3D">&nbsp;</div>
+
+								<div class="selector torrent_selector">
+									<div class="selector_cont" onmouseleave="$(this).children('.activated').insertBefore($(this).children('.item').first());this.scrollTop=0"></div>
+									<div class="icon2 down2"></div>
+								</div>
+
+
 							</div>
 
-							<div class="description">[##description##]</div>
-							<div class="actors">[##actors##]</div>
+							<div class="sep" style="color:rgba(255,255,255,0.7);">
 
 
-							<div class="left_section">
-								<a class="watch_btn" data-in-trans="watchItNow">Watch</a>
-								<div class="torrents"></div>
-							</div>
-							<div class="right_section">
-								<div class="subtitles_flags">
-									<div><span data-in-trans="subtitledIn"></span>:</div>
+
+
+								<div class="selector subs_selector">
+									<div class="selector_cont" onmouseleave="$(this).children('.activated').insertBefore($(this).children('.item').first());this.scrollTop=0"></div>
+									<div class="icon2 down2"></div>
+								</div>
+
+
+								<div class="tools">
+									<div class="tool icon2 heart [##infavs##] fav-btn"></div>
+									<div class="tool trailer" data-in-trans="trailer">Trailer</div>
 								</div>
 							</div>
 						</div>
-				</div>
+
+					</div>
+
+					<div class="movie_cont">
+						<div class="incont">
+							<img class="poster_img">
+							<div class="content">
+								<div class="title">[##title##]</div>
+								<div class="title_info_cont">
 
 
-				<div id="tvshow_page_html">
+									<div class="title_info genre"></div>
+									<div class="title_info"><span class="icon2 date"></span> &nbsp;[##year##]</div>
+									<div class="title_info"><span class="icon2 time"></span> <span class="runtime"></span></div>
+									<div class="title_info stars">[##stars##]</div>
 
-						<div class="episode_content">
-							<div class="episode_title"></div>
-							<div class="episode_description"></div>
-							<a class="watch_btn" data-in-trans="watchItNow">Watch</a>
-							<div class="torrents"></div>
-						</div>
 
-						<div class="season_box">
-								<div class="choose_season">
-									<select onchange="ui.home.catalog.tv_show.set_season(this.value)"></select>
 								</div>
-								<div class="episodes_box"></div>
-						</div>
-						<div class="movie_poster"></div>
-						<div class="content">
-							<div class="title">[##title##]</div>
-							<div class="details">
-								<ul>
-									<li class="detail year">[##year##]</li>
-									<li class="sep"></li>
-									<li class="detail runtime">[##runtime##]</li>
-									<li class="sep"></li>
-									<li class="detail genre">[##genre##]</li>
-									<li class="sep"></li>
-									<li class="detail stars">[##stars##]</li>
-								</ul>
-								<div style="clear:both"></div>
+								<div class="synopsis"></div>
+								<div class="actors"></div>
 							</div>
-							<div class="trailer_bar">
-								<div class="trailer_btn"><span>►</span> &nbsp;<span data-in-trans="trailer">Trailer</span></div>
-							</div>
-
-							<div class="description">[##description##]</div>
-							<div class="actors">[##actors##]</div>
 						</div>
-				</div>
-
-
-				<div id="torrent_option_html">
-					<div class="torrent_option">
-						<div class="quality">[##quality##]</div>
-						<div class="peers">[##peers##]</div>
-						<div class="health" title="Torrent health: [##health##]"><span class="icon health [##health##]"></span></div>
 					</div>
 				</div>
+				<!-- end of movie slider -->
+
+
+				<!--start of tv show slider -->
+				<div id="tvshow_slider_html">
+					<div class="backdrop"></div>
+
+					<div class="head">
+						<div class="incont">
+
+							<div class="poster"></div>
+
+							<div class="info_cont">
+								<div class="title">[##title##]</div>
+								<div class="title_info_cont">
+
+
+									<div class="title_info genre"></div>
+									<div class="title_info runtime_cont"><span class="icon2 time"></span> <span class="runtime"></span></div>
+									<div class="title_info"><span class="icon2 date"></span> &nbsp;<span class="year">[##year##]</span></div>
+									<div class="title_info">[##stars##]</div>
+
+
+								</div>
+								<div class="synopsis"></div>
+
+							</div>
+						</div>
+					</div>
+
+					<div class="body">
+						<div class="column seasons"></div>
+						<div class="column episodes"></div>
+						<div class="column content">
+							<div class="episode_name"></div>
+							<div class="episode_info"><b class="episode_number"></b></div>
+							<div class="episode_overview"></div>
+
+
+								<div id="watch_toolbox">
+									<div class="toolbox_content">
+										<div class="sep">
+											<div class="watch-btn" onclick="ui.tv.watch()">
+												<div class="icon2 play"></div>
+												<div class="caption" data-in-trans="watchItNow">WATCH IT NOW</div>
+											</div>
+										</div>
+										<div class="sep">
+
+											<div class="selector subs_selector">
+												<div class="selector_cont" onmouseleave="$(this).children('.activated').insertBefore($(this).children('.item').first());this.scrollTop=0"></div>
+												<div class="icon2 down2"></div>
+											</div>
+
+
+											<div class="selector torrent_selector">
+												<div class="selector_cont" onmouseleave="$(this).children('.activated').insertBefore($(this).children('.item').first());this.scrollTop=0"></div>
+												<div class="icon2 down2"></div>
+											</div>
+
+
+										</div>
+										<!-- end seps -->
+									</div>
+
+								</div>
+								<!--toolbox end-->
+
+						</div>
+					</div>
+
+				</div>
+				<!-- end of tv show slider -->
+
+
+			
+
+
+				
+			
+				
+
+
+						
+
+				</div>
+
 		</div>
-
     </body>
+
+
 </html>

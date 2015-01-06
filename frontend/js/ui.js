@@ -1,741 +1,536 @@
 var ui = {
 
-  construct:function(){
+	construct:function(){
 
-    this.home.catalog.show();
+		this.home.catalog.set_sizes();
+		this.home.catalog.show();
 
 
-    $('#titlebar_buttons button').click(function(){
-      var obj = {win:{}}
-      obj.win[$(this).attr('id')]=true;
-    })
+		$('#titlebar_buttons div').click(function(){
+			hostApp.sendWinAction($(this).attr('id'));
+		})
 
-    $('#toolbar .section_indicator').click(function(){
+		$('#toolbar .btn').click(function(){
 
-      $('#toolbar .section_indicator.activated').removeClass('activated');
-      $(this).addClass('activated');
+			$('#header .activated').removeClass('activated');
+			$(this).addClass('activated');
 
-      ui.home.catalog.show();
+			$('#search_input').val('')
+			$('#select_sortby option')[0].selected=true;
+			ui.home.catalog.show();
 
-    })
+		})
 
 
 
-    for(var i=0;i<resource.genres.length;i++)
-      $('<div class="genre" data-genre="' + resource.genres[i] + '">' + locale.translate(resource.genres[i]) + '</div>').appendTo('#genres_box');
+		for(var i=0;i<resource.genres.length;i++)
+			$('<div class="genre" data-genre="' + resource.genres[i] + '" data-in-trans="'+resource.genres[i]+'">' + locale.translate(resource.genres[i]) + '</div>').appendTo('#genres_box');
 
-    $('#genres_box .genre:nth-child(1)').addClass('activated');
+		$('#genres_box .genre:nth-child(1)').addClass('activated');
 
-    $('#toolbar_genres').hover(
-      function(){
-        setTimeout('ui.home.genres_box.on=1',1)
-        ui.home.genres_box.show();
+		$('#toolbar_genres').hover(
+			function(){
+				setTimeout('ui.home.genres_box.on=1',1)
+				ui.home.genres_box.show();
 
 
-      },
-      function(){
-        ui.home.genres_box.on=0;
-        ui.home.genres_box.hide();
+			},
+			function(){
+				ui.home.genres_box.on=0;
+				ui.home.genres_box.hide();
 
-      }
-    );
+			}
+		);
 
-    $('#genres_box').hover(
-      function(){
-        setTimeout('ui.home.genres_box.on=1',1)
 
-      },
 
-      function(){
-        ui.home.genres_box.on=0;
-        ui.home.genres_box.hide();
-      }
-    );
+		$('#genres_box .genre').click(function(){
+			$('#genres_box .genre.activated').removeClass('activated')
+			$(this).addClass('activated');
+			$('#search_input').val('')
+			ui.home.catalog.show();
+		})
 
+		$('#search_input').keydown(function(e){
 
-    $('#genres_box .genre').click(function(){
-      $('#genres_box .genre.activated').removeClass('activated')
-      $(this).addClass('activated');
-      $('#toolbar_genres .selection_title').html($(this).html());
-      $('#search_input').val('')
-      ui.home.catalog.show();
-      setTimeout(function(){
-        ui.home.genres_box.on=0;
-        ui.home.genres_box.hide();
-      },300);
+			if(e.which==13 && $(this).val()){
+				if($('#autocomplete .khover').length)
+					$('#autocomplete .khover').click();
+				else
+					ui.home.catalog.show();
+			}
+			else if(e.which==40){
 
-    })
+					var curr = $('#autocomplete .khover')
+					$('#autocomplete .khover').removeClass('khover');
 
-    $('#search_input').keydown(function(e){
+					var next = curr.length ? curr.next() : $('#autocomplete div').first();
+					next.addClass('khover');
 
-      if(e.which==13)
-        ui.home.catalog.show();
+			}
+			else if(e.which==38){
+					var curr = $('#autocomplete .khover')
+					$('#autocomplete .khover').removeClass('khover');
 
-    });
+					var next = curr.length ? curr.prev() : $('#autocomplete div').last();
+					next.addClass('khover');
+			}
 
-    $('#search_bar .icon').click(ui.home.catalog.show)
+		}).
+		focus(function(){
+			$('#search_cont').addClass('activated');
+		}).
+		blur(function(){
+			if($(this).val()=='')
+				$('#search_cont').removeClass('activated');
 
-    ui.home.catalog.center();
+			setTimeout(function(){$('#autocomplete').removeClass('visible')},300);
+		}).
+		keyup(function(e){
 
-  },
+			if(e.which==27){
+				$('#search_input').blur();
+				$('#search_cont.activated').removeClass('activated')
+				return;
+			}
 
-  home:{
+			if((e.which==8 || e.which==46) && $(this).val()==''){
+				ui.home.catalog.show();
+				return;
+			}
 
-    genres_box:{
-      on:0,
-      show:function(){
-        $('#genres_box').css({left:'167px',opacity:1});
-      },
+			if((e.which>40 || e.which==8) && $(this).val().length>2 && $('#toolbar .btn.activated').data('section')=='movies'){
+				if(window.autocompleteXhr && window.autocompleteXhr.abort)
+					window.autocompleteXhr.abort();
+					$('#autocomplete').html('').removeClass('visible')
+
+				window.autocompleteXhr = $.get('http://yts.re/api/list.json?keywords=' + encodeURIComponent($(this).val()) +' &limit=5&sort=seeds',function(json){
+					if(json.MovieList && json.MovieList.length){
+						$('#autocomplete').html('').addClass('visible');
+						var suggests = {}
+
+						json.MovieList.forEach(function(movie){
+							if(movie.MovieTitleClean){
+								suggests[movie.MovieTitleClean] = movie.ImdbCode;
+							}
+						})
 
-      hide:function(){
-        setTimeout(function(){
-          if(!ui.home.genres_box.on)
-            $('#genres_box').css({left:'-140px',opacity:0})
-        },2)
-      }
+						for(var title in suggests){
+							$('#autocomplete').append('<div onmouseover="$(this).addClass(\'khover\')" onmouseout="$(this).removeClass(\'khover\')" onclick="$(\'#search_input\').val(\'' + title.replace(/'/g,'') + '\');$(\'#search_input\').data(\'imdb\',\'' + suggests[title] + '\');ui.home.catalog.show()">' + title + '</div>')
+						}
+					}
+				},'json')
+			}
+		});
 
-    },
+		$('#search_cont .icon').click(function(){
+			if($('#search_input').val()!='')
+				ui.home.catalog.show();
+		})
 
-    catalog:{
-      items:{},
-      show:function(page){
 
-        if(!page)
-          ui.home.catalog.page=1;
-        else
-          ui.home.catalog.page=page;
+		$('#right_bar .icon.search').click(function(){ui.home.catalog.show()})
 
-        $('#movies_catalog').unbind('scroll');
 
+		$('body')
+		.mousedown(function(e){
+			ui.mouseDownClientX = e.clientX;
+		})
+		.mouseup(function(e){
+			if(ui.home.catalog.section!='favs' && Math.abs(e.clientX - ui.mouseDownClientX) > 240)
+				Mousetrap.trigger('shift')
+		})
+		.mousemove(function(e){
+			if(e.clientX < 25 && e.clientY>60 && app.state == 'mainWindow' && !$('body.sidemenu_open').length){
+				Mousetrap.trigger('shift')
+			}
+		});
 
-        ui.sliders.close_all();
+		$('#side_menu').mouseleave(function(){Mousetrap.trigger('shift');})
 
-        var
-        keywords  = $('#search_input').val(),
-        genreEl   = $('.genre.active'),
-        genre     = keywords ? 'all' : ($('#genres_box .genre.activated').data('genre') || 'all'),
-        section    = $('#toolbar .section_indicator.activated').data('section');
+		$('#mode_box span').click(function(){
+			$('#mode_box span.activated').removeClass('activated')
+			$(this).addClass('activated');
 
+			app.config.fetcher.mode = $(this).html().toLowerCase();
+		});
 
-        fetcher.fetch.items(section, genre, keywords, function(err, items){
+		$('#history_panel .caption').click(function(){
+			if($('#history_panel')[0].style.bottom=='-105px')
+				$('#history_panel').css({bottom:0})
+			else
+				$('#history_panel').css({bottom:'-105px'})
+		});
 
-          if(err || !(items instanceof Array)){
+		ui.loading_wrapper.init();
 
-            ui.home.catalog.noResult();
-            logger.log(err);
-          }
-          else{
-            if(!page)
-              ui.home.catalog.clear();
+		$('#mode_box span').click(function(){
 
-            for(var i=0;i<items.length;i++)
-              ui.home.catalog.appendItem(items[i], section, i);
+			app.config.fetcher.mode = $(this).data('mode');
 
+			$('#mode_box .activated').removeClass('activated');
+			$(this).addClass('activated');
+			ui.home.catalog.show();
+		})
 
-            $('#movies_catalog').bind('scroll', function() {
-              if($(this).scrollTop() + $(this).innerHeight() >= this.scrollHeight-400) {
-                ui.home.catalog.show(++ui.home.catalog.page);
-              }
-            })
-            ui.home.catalog.showUnloadedItems();
+	},
 
-          }
+	home:{
 
-        });
-      },
+		catalog:{
+			items:{},
+			set_sizes:function(scale){
 
-      appendItem:function(movie, section, i){
+				if(scale){
+					app.config.set({ui:{coverScale: scale/100 + 1}});
+				}
 
-        var
-        tokens = {
-          title:    movie.title,
-          year:    movie.year,
-          runtime:  movie.runtime,
-          stars:    movie.stars,
-          poster_img:  '<img src="' + movie.image + '" onload="setTimeout(function(){$(\'#movie-'+movie.imdb + '\').css({opacity: 1,transform: \'scale(1, 1)\'})},1);$(\'#movie-'+movie.imdb + '\').removeClass(\'unloaded\')">'
+				var bw	= $('body').width();
+				ui.home.catalog.numItemsInRow	= Math.floor(bw / (app.config.ui.coverWidth * app.config.ui.coverScale));
+				ui.home.catalog.item_width 		= bw / ui.home.catalog.numItemsInRow;
+				ui.home.catalog.item_height 	= ui.home.catalog.item_width / 0.66;
 
-        },
-        html = utils.tokenizer(tokens, document.getElementById('movie_cover_html').innerHTML),
-        onclick = section=='tv' ? 'ui.home.catalog.tv_show.slider' : 'ui.home.catalog.movie.slider';
+				$('#movies_catalog .movie').css({width:ui.home.catalog.item_width+'px', height:ui.home.catalog.item_height+'px'});
+				$('#movies_catalog .movie .title').css('font-size', app.config.ui.coverTiteSize * app.config.ui.coverScale);
+				$('#movies_catalog .movie .year').css('font-size', app.config.ui.coverYearSize * app.config.ui.coverScale);
+				$('#movies_catalog .movie .tools').css('font-size', app.config.ui.coverToolsSize * app.config.ui.coverScale);
+				$('#movies_catalog .movie .stars').css('font-size', app.config.ui.coverStarsSize * app.config.ui.coverScale);
 
+				$('#size_setter').val(Math.round((app.config.ui.coverScale-1)*100))
 
-        if(!ui.home.catalog.items[movie.imdb.toString()])
-          ui.home.catalog.items[movie.imdb.toString()] = movie;
+				if(ui.home.catalog.scroller)
+					ui.home.catalog.scroller.refresh();
+			},
+			show:function(page){
 
-        $('<div onclick="' + onclick + '(\''+movie.imdb+'\')"  id="movie-'+movie.imdb+'" style="transition-delay: 0s, '+(i/15)+'s;" class="movie unloaded" tabindex="'+(i+4)+'">'+html+'</div>').appendTo('#movies_catalog');
+				if(!page)
+					ui.home.catalog.page=1;
+				else
+					ui.home.catalog.page=page;
 
-      },
 
-      showUnloadedItems:function(){
-        setTimeout(function(){
-          $('#movies_catalog .unloaded').css({opacity:1,transform: "scale(1, 1)"}).removeClass('unloaded');
-        },5000)
-      },
 
-      clear:function(){
-        $('#movies_catalog').html('');
-        document.getElementById('movies_catalog').scrollTop=0;
-      },
+				ui.sliders.close_all();
+				app.state = 'mainWindow';
+				$('#history_panel').hide();
 
-      noResult:function(){
+				var
+				keywords	= $('#search_input').data('imdb') || $('#search_input').val(),
+				genreEl 	= $('.genre.active'),
+				genre 		= keywords ? 'all' : ($('#genres_box .genre.activated').data('genre') || 'all'),
+				section		= $('#toolbar .btn.activated').data('section');
 
-        if(ui.home.catalog.page==1)
-          utils.msgbox( locale.translate('noResults') );
+				$('#search_input').data('imdb','');
 
-        fetcher.scrappers.tv_idx=0;
-        fetcher.scrappers.movies_idx=0;
-      },
+				if(!section){
+					$('#header .activated').removeClass('activated');
+					$('#toolbar .btn:nth(0)').addClass('activated');
+					section = 'movies'
 
-      movie:{
-        slider: function(imdb){
+				}
 
-          if(ui.sliders.slider[imdb])
-            return;
+				ui.home.catalog.section = section;
+				fetcher.fetch.items(section, genre, keywords, function(err, items){
 
-          ui.sliders.close_all();
+					if(err || !(items instanceof Array)){
 
+						ui.home.catalog.noResult();
+						logger.log(err);
+					}
+					else{
 
-          var
-          slider       = new ui.slider(imdb),
-          movie       = ui.home.catalog.items[imdb],
-          html       = utils.tokenizer(movie, $('#movie_page_html').html()),
-          slider_selector = '#slider_' + imdb ;
+						if(!page){
+							ui.home.catalog.clear();
+							$('<div style="width:100%;height:65px;float:left"></div>').appendTo('#catalog_scroller');
+						}
 
+						for(var i=0;i<items.length;i++)
+							ui.home.catalog.appendItem(items[i], section, i);
 
-          if(!movie){
-            return;
-            logger.log('error_missing_movie_catalog_id_' + imdb)
-          }
 
+						$('#movies_catalog').bind('scroll', function() {
+							if($(this).scrollTop() + $(this).innerHeight() >= this.scrollHeight-400) {
+								ui.home.catalog.show(++ui.home.catalog.page);
+							}
+						});
 
-          slider.el.addClass('movie').append(html);
 
+						ui.home.catalog.showUnloadedItems(ui.home.catalog.page);
 
-          var img = (new Image);
-          img.onload = function(){
 
-            $('#slider_'+imdb+' .movie_poster').html('<img src="' + movie.bigImage + '">');
+						if(ui.home.catalog.scroller){
+							ui.home.catalog.scroller.refresh();
+						}
+						else{
+							ui.home.catalog.scroller = new IScroll('#movies_catalog',{
+								mouseWheel: 	true,
+								mouseWheelSpeed: 30,
+								scrollbars:		true,
+								hScrollbar:		false,
+								vScrollbar:		true,
+								click:			true,
+								fadeScrollbars:	true,
+								interactiveScrollbars:	true,
+								resizeScrollbars:		true,
+								shrinkScrollbars:		'scale'
 
-          }
-          img.src=movie.bigImage;
+							});
 
+							ui.home.catalog.scroller.on('scrollEnd',function(){
+								if(ui.home.catalog.section!='favs' && Math.abs(this.maxScrollY) - Math.abs(this.y) < 600 && ui.home.catalog.page){
+									ui.home.catalog.show(++ui.home.catalog.page);
+								}
+							})
 
 
-          if(movie.trailer){
+						}
 
-            $('.slider .trailer_btn').click(function(){
+						if(!page){
+							ui.home.catalog.scroller.scrollTo(0,(keywords ? 0 : -65))
+						}
 
-              var trailer_slider = new ui.slider('trailer_' + imdb, 'right');
-              trailer_slider.el.append('<iframe src="' + movie.trailer + '" style="width:100%;height:100%;" frameborder="0" scrolling="0"></iframe>');
-              trailer_slider.show();
-            });
+					}
 
-          }
-          else
-            $('.slider .trailer_bar').css('display','none');
+				});
+			},
 
+			appendItem:function(movie, section, i){
 
-          if(!movie.description){
-            fetcher.fetch.movie_info(imdb, function(info){
 
-              $(slider_selector + ' .description').html(info.description);
-              $(slider_selector + ' .runtime').html(info.runtime);
-              $(slider_selector + ' .genre').html(info.genre);
-              $(slider_selector + ' .actors').html(info.actors);
+				movie.infavs = app.favs.list[movie.imdb] && 'infavs' || '';
 
 
-            });
-          }
-          $('#slider_'+imdb+' .likebox iframe').attr("src", $('#slider_'+imdb+' .likebox iframe').data('src'));
+				var
+				tokens = {
+					id:			movie.imdb,
+					title:		movie.title,
+					year:		movie.year,
+					runtime:	movie.runtime,
+					stars:		movie.stars,
+					infavs:		movie.infavs,
+					poster_img:	'<img src="' + movie.poster_small + '" onload="setTimeout(function(){$(\'#movie-'+movie.imdb + '\').css({opacity: 1,transform: \'scale(1, 1)\'})},1);$(\'#movie-'+movie.imdb + '\').removeClass(\'unloaded\')">',
 
-          fetcher.fetch.subtitles(imdb, function(subs){
-            api.subtitles = [];
-            for(var i=0;i<subs.length;i++){
+					titleFontSize:	app.config.ui.coverTiteSize * app.config.ui.coverScale,
+					yearFontSize:	app.config.ui.coverYearSize * app.config.ui.coverScale,
+					toolsFontSize:	app.config.ui.coverToolsSize * app.config.ui.coverScale,
+					starsFontSize:	app.config.ui.coverStarsSize * app.config.ui.coverScale
 
-              api.subtitles.push(subs[i]);
+				},
+				html = utils.tokenizer(tokens, document.getElementById('movie_cover_html').innerHTML);
 
-              var flag = subs[i][2] == "Brazilian-portuguese" ? "br" : resource.lang2code[subs[i][1]];
-              if(flag)
-                $('#slider_'+imdb+' .subtitles_flags').append('<img title="' + subs[i][2] + '" src="/images/flags/' + flag + '.png" style="display:none" onload="this.style.display=\'inline\'">')
-            }
 
-          })
+				if(!ui.home.catalog.items[movie.imdb.toString()])
+					ui.home.catalog.items[movie.imdb.toString()] = movie;
 
-          if(movie.torrents){
-            var html = $('#torrent_option_html').html();
 
-            // Swap torrents if 720p is not in first position
-            if(movie.torrents.length>1 && movie.torrents[0].quality !== '720p') {
-              var tmp = movie.torrents[1];
-              movie.torrents[1] = movie.torrents[0]
-              movie.torrents[0] = tmp;
-            }
+				$('<div data-section="'+section+'" data-movie_id="'+movie.imdb+'"  id="movie-'+movie.imdb+'" style="width:' + ui.home.catalog.item_width + 'px;height:' + ui.home.catalog.item_height + 'px;transition-delay: 0s, '+(i/23)+'s;" class="movie unloaded p' + ui.home.catalog.page + '">'+html+'</div>').appendTo('#catalog_scroller')
+				.click(function(e){
 
-            for(var i=0;i<movie.torrents.length;i++){
-              var option = utils.tokenizer({
-                quality:  movie.torrents[i].quality,
-                peers:    movie.torrents[i].torrent_seeds + ' Seeds, &nbsp;' + movie.torrents[i].torrent_peers + ' Peers',
-                health:    utils.calculateTorrentHealth(movie.torrents[i].torrent_seeds, movie.torrents[i].torrent_peers)
+					if($(e.target).attr('class').indexOf('-btn')==-1){
+						ui[ $(this).data('section') ].show($(this).data('movie_id'))
+					}
 
-              }, html);
-              $(option).appendTo(slider_selector + ' .torrents').click(function(){
+				})
+				.mouseenter(function(){
+					$('#movies_catalog .movie.khover').removeClass('khover');
+					$(this).addClass('khover');
+				});
 
-                $('#slider_'+imdb+' .torrent_option.activated').removeClass('activated');
-                $(this).addClass('activated');
+			},
 
-              });
+			showUnloadedItems:function(page){
+				setTimeout(function(){
+					//$('#movies_catalog .unloaded.p' + page + ' img').attr('src', 'css/images/poster.png');
+					$('#movies_catalog .unloaded.p' + page).css({opacity:1,transform: "scale(1, 1)"}).removeClass('unloaded');
+				},5000)
+			},
 
-            }
-            $(slider_selector + ' .torrent_option:nth-child(1)').addClass('activated')
-          }
+			clear:function(){
+				$('#catalog_scroller').html('');
+				$('#catalog_scroller').sortable({ disabled: true });
+			},
 
+			noResult:function(){
 
-          $(slider_selector + ' .watch_btn').click(function(){
-            var el = $(slider_selector + ' .torrent_option.activated');
+				if(ui.home.catalog.page==1)
+					$('#catalog_scroller').html('<div class="noResults">No results found...</div>');
 
-            if(!el.length){
-              utils.msgbox('Error - please choose a torrent');
-              return;
-            }
+				try{
+					ui.home.catalog.scroller.scrollToElement($('#catalog_scroller .noResults')[0],null,null,true)
+				}
+				catch(e){}
 
-            var idx = el.index();
+				fetcher.scrappers.tv_idx=0;
+				fetcher.scrappers.movies_idx=0;
+			}
 
-            if(!movie.torrents[idx] || !movie.torrents[idx].torrent_url){
+		},
 
-              utils.msgbox('Error - please choose a diffrent torrent');
-              el.remove();
-              $(slider_selector + ' .torrent_option').eq(0).addClass('activated');
 
-              return;
-            }
+	},
 
+	about_page:{
+		show:function(){
 
+			if(ui.sliders.slider.about){
+				ui.sliders.slider.about.hide();
+				return;
+			}
 
-            var
-            torrent   = movie.torrents[idx].torrent_url,
-            video_file   = movie.torrents[idx].file;
+			app.state='aboutPage';
 
-            api.send({torrent:{stream:[torrent, video_file]}});
+			var
+			version = location.href.match(/version=([0-9\.]+)/),
+			ver = (version && version[1] || '') + (location.href.match(/version=([0-9\.]+)a/) ? ' Alpha' : ''),
+			html = utils.tokenizer({"version": ver}, $('#about_page_html').html()),
+			slider = new ui.slider('about', 'fadein');
 
-            socket.once('streamUrl', function(port){
-              var url = document.URL.substring(0, document.URL.length - 1) + ':' + port
-              setTimeout(function() {
-                api.play_video(url);
-              }, 6000);
-            });
+			slider.el.append(html);
+			slider.destruct = function(){
+				app.state = 'mainWindow';
+			}
 
-            ui.loading_wrapper.show();
+			slider.show();
 
-            var percent = 0;
-            var loading = setInterval(function(){
-              percent += 100/5;
-              ui.loading_wrapper.change_stats(percent, 0,'Loading...');
-            }, 1000);
+		}
+	},
 
-            setTimeout(function() {
-              clearInterval(loading);
-            }, 6000);
+	sliders:{
+		slider:{},
+		close_all:function(){
 
-            /*setTimeout(function(){
-              if($('#loading_wrapper .msg').html()==''){
-                api.send({torrent:{stream_stop:true}});
-                ui.loading_wrapper.hide();
-                ui.cover.hide();
-                utils.msgbox('Error fetching this torrent! - Please try again or choose another one.')
-              }
+			for(var i in ui.sliders.slider)
+				ui.sliders.slider[i].hide();
+		}
+	},
+	slider:	function(id, position){
 
-            },5000)*/
+		if(ui.sliders[id]){
 
-          })
+			return ui.sliders[id];
 
-          slider.show();
+		}
+		else{
 
-        }
+			var
+			positions = (function(){
 
-      },
+				var pos = {
+					"fadein": [{"top": "0"}, {"top": "0"}],
+					"bottom": [{"top": "0"}, {"top": "200%"}],
+					"right": [{"left": "0"}, {"left": "200%"}],
+					"left": [{"left": "0"}, {"left": "-200%"}]
+				}
 
+				return position && pos[position] ? [pos[position],position] : [pos['fadein'], 'fadein'];
 
-      tv_show:{
-        slider: function(imdb){
+			})(),
+			slider = $('<div id="slider_' + id + '" class="slider ' + positions[1] + '" data-id="' + id + '"><div class="close" onclick="ui.sliders.slider[\'' + id + '\'].hide()"></div></div>');
 
-          if(ui.sliders.slider[imdb])
-            return;
 
-          ui.sliders.close_all();
+			slider.appendTo('body');
+			ui.sliders.slider[id] = {
+				el: slider,
+				id:id,
+				show: function(){
+					var css = positions[0][0];
+					css.opacity=1;
+					setTimeout(function(){slider.css(css)},1);
+				},
+				hide: function(){
+					var css = positions[0][1];
+					css.opacity=0;
+					slider.attr('ontransitionEnd', '$(this).remove()').css(css);
 
 
-          var
-          slider   = new ui.slider(imdb),
-          movie   = ui.home.catalog.items[imdb],
-          html   = utils.tokenizer(movie, $('#tvshow_page_html').html());
+					if(typeof this.destruct == 'function')
+						this.destruct();
 
-          if(!movie){
-            return;
-            logger.log('error_missing_movie_catalog_id_' + imdb)
-          }
 
+					delete ui.sliders.slider[id];
+				}
+			}
 
-          slider.el.addClass('tvshow').append(html);
+		}
 
+		return ui.sliders.slider[id];
 
-          var img = (new Image);
-          img.onload = function(){
+	},
 
-            $('#slider_'+imdb+' .movie_poster').html('<img src="' + movie.bigImage + '">');
+	torrent_report:{
+		show:function(el){
+			$(el).parents('.torrent_info').fadeOut('fast',function(){
+				var report_div = $(this).next('.torrent_report');
+				report_div.fadeIn('fast');
 
-          }
-          img.src=movie.bigImage;
+				setTimeout(function(){ui.torrent_report.hide(report_div)},5000)
 
+			});
+		},
+		hide:function(el){
+			if(!el.length)
+				return;
 
+			el.fadeOut('fast',function(){
+				$(this).prev('.torrent_info').fadeIn('fast');
 
-          if(movie.trailer){
+			});
+		},
+		send:function(el, vote_id){
 
-            $('.slider .trailer_btn').click(function(){
+			var
+			torrent_option 	= $(el).parents('.torrent_option'),
+			id 				= torrent_option.data('id');
 
-              var trailer_slider = new ui.slider('trailer_' + imdb, 'right');
-              trailer_slider.el.append('<iframe src="' + movie.trailer + '" style="width:100%;height:100%;" frameborder="0" scrolling="0"></iframe>');
-              trailer_slider.show();
-            });
+			torrent_option.fadeOut('fast',function(){
+				utils.msgbox('<span style="font-size:16px;">Hasta la vista, Torrent</span>')
+				$(this).remove();
+				$('.slider .torrents .torrent_option:first-child').addClass('activated')
+			});
 
-          }
-          else
-            $('.slider .trailer_bar').css('display','none');
 
+			(new Image).src="http://api.torrentsapi.com/vote?id="+id+"&v=" + vote_id;
+			ga('send', 'pageview', '/reports/'+id+'/'+vote_id);
 
-          if(!movie.description){
-            fetcher.fetch.movie_info(imdb, function(info){
+		}
 
-              $('#slider_' + imdb + ' .description').html(info.description);
-              $('#slider_' + imdb + ' .runtime').html(info.runtime);
-              $('#slider_' + imdb + ' .genre').html(info.genre);
-              $('#slider_' + imdb + ' .actors').html(info.actors);
+	},
+	trailer:{
+		show:function(url){
 
+			var slider = new ui.slider('trailer','fadein');
+			slider.el.append('<div style="width:100%;height:calc(100% - 35px);margin-top:35px;box-sizing:border-box;overflow:hidden;"><iframe src="' + url + '" style="width:100%;height:100%;" frameborder="0" scrolling="0"></iframe></div>')
+			slider.show()
 
-            });
-          }
-          $('#slider_'+imdb+' .likebox iframe').attr("src", $('#slider_'+imdb+' .likebox iframe').data('src'));
+		},
+		close:function(){
+			ui.sliders.slider.trailer.hide();
+		}
+	},
+	events:{
 
-          fetcher.fetch.tv_show(imdb, function(err, items){
 
-            if(err){
+		watch_btn_click:function(){
 
-              slider.hide();
-              utils.msgbox('Error fetching the TV Show');
-              logger.log(err);
+			ui.loading_wrapper.show();
 
-            }
-            else{
+			var
+			slider		= document.section.chosen[0].checked ? 'movie_slider' : 'tvshow_slider',
+			torrent 	= $('#' + slider + ' .torrents_list').val().toString()!='0' ? $('#' + slider + ' .torrents_list').val().split(',') : $('#' + slider + ' .torrents_list option')[1].value.split(','),
+			subtitles 	= $('#' + slider + ' .subtitles_list').val().toString()!='0' ? $('#' + slider + ' .subtitles_list').val() : null;
 
-              ui.home.catalog.tv_show.items = [items, imdb];
+			app.torrent.get(torrent[0], torrent[1], subtitles);
 
-              var
-              seasons_counter  = 0,
-              seasons_cont   = $('#slider_' + imdb + ' .choose_season select');
+		},
 
-              for(var i in items){
-                seasons_cont.append('<option value="'+i+'">' + locale.translate('season') + ' ' + i + '</div>');
+		window_resize:function(){
+			ui.home.catalog.set_sizes();
+		}
 
-                if(!seasons_counter){
+	},
 
-                  ui.home.catalog.tv_show.set_season(i);
-                }
-
-                seasons_counter++;
-              }
-
-              seasons_cont.css('display','inline');
-
-
-            }
-
-          });
-
-
-          slider.show();
-
-        },
-
-        set_season:function(season_id){
-
-          var
-          imdb      = ui.home.catalog.tv_show.items[1],
-          episodes     = ui.home.catalog.tv_show.items[0][season_id],
-          episodes_cont   = $('#slider_' + imdb + ' .episodes_box'),
-          poster_url    = $('#slider_'+imdb+' .movie_poster img').attr('src');
-
-          episodes_cont.html('');
-
-          for(var i=0;i<episodes.length;i++){
-            episodes_cont.append('<div onclick="ui.home.catalog.tv_show.show_episode(\''+season_id+'\','+i+')" class="episode"><div class="episode_num">' + (i+1) + '</div></div>');
-          }
-
-          ui.home.catalog.tv_show.show_episode(season_id,0);
-          episodes_cont[0].scrollTop=0;
-
-        },
-
-        show_episode:function(season_id, episode_id){
-
-          var
-          imdb  = ui.home.catalog.tv_show.items[1],
-          episode  = ui.home.catalog.tv_show.items[0][season_id][episode_id];
-
-          $('#slider_' + imdb + ' .episode.activated').removeClass('activated');
-          $('#slider_' + imdb + ' .episode:nth-child(' + (episode_id+1) + ')').addClass('activated');
-          $('#slider_' + imdb + ' .episode_title').html(episode.title);
-          $('#slider_' + imdb + ' .episode_description').html(episode.synopsis);
-          $('#slider_' + imdb + ' .watch_btn').css('visibility','visible');
-          $('#slider_' + imdb + ' .torrents').html('')
-
-          if(episode.items && episode.items.length){
-            $('#slider_' + imdb + ' .watch_btn').css('visibility','visible');
-
-            var html = $('#torrent_option_html').html();
-            for(var i=0;i<episode.items.length;i++){
-
-              var option = utils.tokenizer({
-                quality:  episode.items[i].quality,
-                peers:    episode.items[i].torrent_seeds + ' Seeds, &nbsp;' + episode.items[i].torrent_peers + ' Peers',
-                health:    utils.calculateTorrentHealth(episode.items[i].torrent_seeds, episode.items[i].torrent_peers)
-
-              }, html);
-              $(option).appendTo('#slider_' + imdb + ' .torrents').click(function(){
-
-                $('#slider_'+imdb+' .torrent_option.activated').removeClass('activated');
-                $(this).addClass('activated');
-
-              });
-
-            }
-            $('#slider_' + imdb + ' .torrent_option:nth-child(1)').addClass('activated')
-
-
-            api.subtitles = [];
-            fetcher.scrappers.torrentsapi_subs(imdb, season_id, episode_id, function(subs){
-                for(var i=0;i<subs.length;i++){
-                                api.subtitles.push(subs[i]);
-                }
-            })
-
-          }
-          else{
-            $('#slider_' + imdb + ' .watch_btn').css('visibility','hidden');
-            $('#slider_' + imdb + ' .episode_description').append('<div style="padding-top:20px;font-size:14px;color:red">No available torrents for this episode at this time. Please come back later</div>')
-          }
-
-
-
-          $('#slider_' + imdb + ' .watch_btn').unbind('click').click(function(){
-            var el = $('#slider_' + imdb + ' .torrent_option.activated');
-
-            if(!el.length){
-              utils.msgbox('Error - please choose a torrent');
-              return;
-            }
-
-            var idx = el.index();
-
-            if(!episode.items[idx] || !episode.items[idx].torrent_url){
-
-              utils.msgbox('Error - please choose a diffrent torrent');
-              el.remove();
-              $(slider_selector + ' .torrent_option').eq(0).addClass('activated');
-
-              return;
-            }
-
-
-
-            var
-            torrent   = episode.items[idx].torrent_url,
-            video_file   = episode.items[idx].file;
-
-            api.send({torrent:{stream:[torrent, video_file]}});
-
-            socket.once('streamUrl', function(port){
-              var url = document.URL.substring(0, document.URL.length - 1) + ':' + port
-
-              setTimeout(function() {
-                // The file can't be played in the browser
-                if(video_file.toLowerCase().indexOf('mp4') === -1) {
-                  $('.pocholin').hide();
-                  $('.progress_bar').hide();
-                  $('.msg').hide();
-                  $('.percentage').hide();
-                  $('#loading_wrapper').append('<p style="center; font-size:20px; color:#787878;">' + locale.translate('vlc_msg_1') +  '<br /><br />' +  url + ' <br /><br />' + locale.translate('vlc_msg_2') + '</p>');
-                  for(var s in api.subtitles) {
-                    $('#loading_wrapper').append('<a style="center; font-size:20px; color:#787878;" onclick=api.downloadSub("' + api.subtitles[s][0] + '","' + api.subtitles[s][1] + '") href="#">' + api.subtitles[s][2] + '|' + '</a>');
-                    if(s%6==0 && s!=0)
-                      $('#loading_wrapper').append('<br />');
-                  }
-                }
-                else {
-                  api.play_video(url);
-                }
-              }, 6000);
-            });
-
-            $('.pocholin').show();
-            $('.progress_bar').show();
-            $('.msg').show();
-            $('.percentage').show();
-            ui.loading_wrapper.show();
-            $('#loading_wrapper p').hide();
-            $('#loading_wrapper a').hide();
-            $('#loading_wrapper br').hide();
-
-            var percent = 0;
-            var loading = setInterval(function(){
-              percent += 100/5;
-              ui.loading_wrapper.change_stats(percent, 0,'Loading...');
-            }, 1000);
-
-            setTimeout(function() {
-              clearInterval(loading);
-            }, 6000);
-            /*setTimeout(function(){
-              if($('#loading_wrapper .msg').html()==''){
-                api.send({torrent:{stream_stop:true}});
-                ui.loading_wrapper.hide();
-                ui.cover.hide();
-                utils.msgbox('Error fetching this torrent! - Please try again or choose another one.')
-              }
-
-            },5000)*/
-
-          })
-
-
-        }
-
-
-      },
-
-      center:function(){
-        $('#movies_catalog').css('padding-left', Math.floor(($(window).width()- 8 - 158*Math.floor($(window).width() / 158))/2) + 'px')
-      }
-
-    }
-
-  },
-
-  cover:{
-    show:function(close_callback){
-
-      $('.cover').remove();
-      $('<div class="cover"><div class="close">X</div></div>').appendTo('body')
-      setTimeout(function(){
-          $('.cover').css({opacity:1});
-      },1);
-      $('.cover .close').click(function(){
-
-        ui.cover.hide();
-        if(close_callback)
-          close_callback();
-
-      });
-
-    },
-    hide:function(){
-      $('.cover').attr("ontransitionEnd","this.parentNode.removeChild(this)").css({opacity:0});
-    }
-  },
-
-  sliders:{
-    slider:{},
-    close_all:function(){
-
-      for(var i in ui.sliders.slider)
-        ui.sliders.slider[i].hide();
-
-    }
-  },
-  slider:  function(id, position){
-
-    if(ui.sliders[id]){
-
-      return ui.sliders[id];
-
-    }
-    else{
-
-      var
-      positions = (function(){
-
-        var pos = {
-          "bottom": [{"top": "50%"}, {"top": "200%"}],
-          "right": [{"left": "50%"}, {"left": "200%"}],
-          "left": [{"left": "50%"}, {"left": "-200%"}]
-        }
-
-        return position && pos[position] ? [pos[position],position] : [pos['bottom'], 'bottom'];
-
-      })(),
-      slider = $('<div id="slider_' + id + '" class="slider ' + positions[1] + '"><div class="close" onclick="ui.sliders.slider[\'' + id + '\'].hide()">&nbsp;X</div></div>');
-
-
-      slider.appendTo('body');
-      ui.sliders.slider[id] = {
-        el: slider,
-        show: function(){
-          setTimeout(function(){slider.css(positions[0][0])},1);
-        },
-        hide: function(){
-          slider.attr('ontransitionEnd', '$(this).remove()').css(positions[0][1]);
-          delete ui.sliders.slider[id];
-        }
-      }
-
-    }
-
-    return ui.sliders.slider[id];
-
-  },
-
-  loading_wrapper:{
-    show: function(){
-      ui.loading_wrapper.change_stats(0,0,'');
-      document.getElementById('loading_wrapper').style.display='inline';
-      ui.cover.show(function(){
-        //api.send({torrent:{stream_stop:true}});
-        ui.loading_wrapper.hide();
-      });
-    },
-
-    hide: function(){
-
-      document.getElementById('loading_wrapper').style.display='none';
-
-    },
-
-    change_stats: function(percentage, speed, msg){
-
-      percentage = Math.round(percentage);
-
-      $('#loading_wrapper .progress_bar .fill').css('width', percentage+'%');
-      $('#loading_wrapper .percentage').html(percentage+'%');
-      $('#loading_wrapper .msg').html(msg);
-
-    },
-
-
-  },
-  events:{
-
-
-    watch_btn_click:function(){
-
-      //ui.loading_wrapper.show();
-
-      var
-      slider    = document.section.chosen[0].checked ? 'movie_slider' : 'tvshow_slider',
-      torrent   = $('#' + slider + ' .torrents_list').val().toString()!='0' ? $('#' + slider + ' .torrents_list').val().split(',') : $('#' + slider + ' .torrents_list option')[1].value.split(','),
-      subtitles   = $('#' + slider + ' .subtitles_list').val().toString()!='0' ? $('#' + slider + ' .subtitles_list').val() : null;
-
-      app.torrent.get(torrent[0], torrent[1], subtitles);
-
-    }
-
-  }
+	disableAnimations:function(e){
+		$('body')[ e ? 'addClass' : 'removeClass']('disable_animations')
+	}
 
 }
