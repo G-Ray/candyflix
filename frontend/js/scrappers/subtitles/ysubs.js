@@ -2,17 +2,13 @@ fetcher.scrappers.ysubs = function(movie_id, callback){
 
     var
     baseUrl	= 'http://api.yifysubtitles.com/subs/',
-    prefix 	= 'http://www.yifysubtitles.com';
+    prefix 	= 'http://www.yifysubtitles.com/';
 
-    var url = baseUrl + movie_id;
-
-    // The server does the request
-    api.send({url_request:url});
-    socket.once('url_request', function(json) {
+    utils.url_request(baseUrl + movie_id, function(json){
 
 		try{
 
-			json = JSON.parse(json);
+			json = jQuery.type( json ) === "string"? JSON.parse(json): json;
 			var subs = json.subs && json.subs[movie_id] || false;
 
 			if(subs){

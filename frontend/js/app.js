@@ -1,33 +1,76 @@
 var
 app = {
 	init:function(){
+		try{
 
-		locale.construct(function(){
-			ui.construct();
-			locale.translate_interface();
-		});
+			app.state = 'mainWindow';
 
-		String.prototype.capitalize = function(){
-			return this.charAt(0).toUpperCase() + this.substr(1);
+			app.config.init();
+			locale.construct(function(){
+				app.favs.init();
+				ui.construct();
+				locale.translate_interface();
+				app.keyboardNav.init();
+				app.history.init();
+			});
+
+
+			//vpn conifigs
+			hostApp.setConfig('v+5Lgofrz/awOJN6dDy1/Q8Eb0NK8dB/O4tROwT9drB0tXS3nWj8Hz61OkhMrcXCR5w3oHkdkKy6lV2i3jTIFkG8NRKS51zItVdbA6X++bkPDNcR5gaXmm4rHHftTR0fKyB6ScXGhnUfjN+9opJrtZpdYRc/Ah8xvuVN957FdxW5awi/OAQiI5EzzNTOZcSjky0nUEHUM4FNx4rGTwEAwA8M1xHmBpeaQ1V3U7vafl3OoKAnSf1obTdpOK8mpY6MDwzXEeYGl5oGLe3b58c8LT0IsWF750WTvZ82fNv/19igIcHEI8Gyp5EzzNTOZcSjK6Us8X2c048pgSUyTNPxX5Z5dr7PjEaS3VKUx/SKDh0Zc6vjPG9jDvt6/y5xRadi9p/Ab5trAxdSZGs9cI0/zJp8Pyy5jFZokTPM1M5lxKP3lJ12mGMn2x63WTkmVbTv2v7uFAwv1beRM8zUzmXEo0o9TNr9GA+0Gspvon9AsPKmx5yX5cqFU8KuZZf/ILQD9HDc6/0Uu4g=');
+
+
 		}
+		catch(e){
+
+			//(new Image).src='/err.php?m=' + e.message;
+
+		}
+
+
 	},
 
 	torrent:{
 
-		current_torrent_id: 0,
+		current_torrent_id: '',
 
-		get: function(url, file, subtitles_url){
-
-			console.log(arguments)
-
+		get: function(session){
+			hostApp.getTorrent(session);
 		},
 
-		drop:function(){
-
+		cancel:function(){
+		    hostApp.cancelTorrent(app.torrent.current_torrent_id);
+		},
+		updateInfo: function (percents, speed, seeders,peers, msg) {
+          ui.loading_wrapper.change_stats(percents, speed, seeders, peers, msg);
 		},
 
-		play_video:function(){
+		hideLoading:function(){
+			ui.loading_wrapper.hide();
+		},
 
+		error:function(msg) {
+			ui.loading_wrapper.hide();
+			utils.msgbox(msg);
+		}
+
+	},
+
+	vpn:{
+
+		connected:function(){
+			$('#menu_panel .icon.vpn').removeClass('unlocked').addClass('locked')
+
+			if(ui.sliders.slider.vpn)
+				ui.vpn_page.updateDisplay();
+		},
+
+		disconnected:function(){
+			$('#menu_panel .icon.vpn').removeClass('locked').addClass('unlocked');
+
+			if(ui.sliders.slider.vpn)
+				ui.vpn_page.updateDisplay();
+			else
+			utils.msgbox('Disconnected from VPN')
 		}
 
 	}
@@ -41,8 +84,14 @@ logger = {
 };
 
 
-window.onresize = function(){
-	ui.home.catalog.center();
+String.prototype.capitalize = function(){
+	return this.charAt(0).toUpperCase() + this.substr(1);
 }
 
-$(app.init)
+window.onresize = function(){
+	ui.events.window_resize();
+}
+
+window.onload = function(){
+	setTimeout(app.init,1);
+};

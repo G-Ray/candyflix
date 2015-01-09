@@ -1,4 +1,4 @@
-fetcher.scrappers.t4p_tv = function(genre, keywords, page, callback){
+fetcher.scrappers.anime_tv = function(genre, keywords, page, callback){
 
 
 
@@ -6,7 +6,7 @@ fetcher.scrappers.t4p_tv = function(genre, keywords, page, callback){
 			genre = !1;
 
 
-		var url = 'http://api.torrentsapi.com/shows?cb='+Math.random()+'&sort=' + app.config.fetcher.sortBy + '&page=' + ui.home.catalog.page;
+		var url = 'http://api.anime.torrentsapi.com/shows?cb='+Math.random()+'&sort=' + app.config.fetcher.sortBy + '&page=' + ui.home.catalog.page;
 
         if (keywords) {
             url += '&keywords=' + keywords;
@@ -48,7 +48,7 @@ fetcher.scrappers.t4p_tv = function(genre, keywords, page, callback){
 						title:      movie.title,
 						year:       movie.year ? movie.year : '&nbsp;',
 						runtime:    movie.runtime,
-						synopsis:   "",
+						synopsis:   movie.description,
 						imdb_rating: parseFloat(movie.rating),
 
 						poster_small:	movie.poster_med,
