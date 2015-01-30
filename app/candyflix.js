@@ -56,7 +56,9 @@ io.on('connection', function(socket){
 
         if(!processes[msg.torrent.stream[1]]) {
           var process = {};
-          var child = spawn('peerflix', [msg.torrent.stream[0], '--port='+ port], {});
+
+          var child = spawn('peerflix', [msg.torrent.stream[0], '--port='+ port, '--tmp=./tmp', '--remove'], {});
+
           process.port = port;
           process.spectators = 0;
           process.child = child;
