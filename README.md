@@ -17,9 +17,20 @@ Installation
 2. Install peerflix
 3. Serve the frontend folder with your favorite webserver
 4. Set a proxypass to redirect from /socket.io/ to http://localhost:3000
+
+ Exemple with nginx:
+ ```
+  location /socket.io/ {
+      proxy_pass http://localhost:3000;
+      proxy_http_version 1.1;
+      proxy_set_header Upgrade $http_upgrade;
+      proxy_set_header Connection "upgrade";
+      proxy_set_header Host $host;
+  }
+```
 5. The fun part :
 
-```
+   ```
 cd app
 npm install
 node candyflix.js
