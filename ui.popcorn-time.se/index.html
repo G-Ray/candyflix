@@ -1,0 +1,490 @@
+<!doctype html>
+<html manifest="/cache.manifest">
+    <head>
+        <meta charset="UTF-8">
+        <title>Popcorn Time</title>
+        <script type="text/javascript">
+//<![CDATA[
+try{if (!window.CloudFlare) {var CloudFlare=[{verbose:0,p:0,byc:0,owlid:"cf",bag2:1,mirage2:0,oracle:0,paths:{cloudflare:"/cdn-cgi/nexp/dok3v=1613a3a185/"},atok:"3a98d988878661a645d6837beaeefc71",petok:"228565f75ceabbe21b6f8e04ad87f7fe7ed049af-1422790918-1800",zone:"popcorn-time.se",rocket:"0",apps:{}}];CloudFlare.push({"apps":{"ape":"3b793ba9b926f4133b098851d35f6d84"}});!function(a,b){a=document.createElement("script"),b=document.getElementsByTagName("script")[0],a.async=!0,a.src="//ajax.cloudflare.com/cdn-cgi/nexp/dok3v=919620257c/cloudflare.min.js",b.parentNode.insertBefore(a,b)}()}}catch(e){};
+//]]>
+</script>
+<link rel="stylesheet" href="css/app.css?cb=5">
+        <script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/iscroll.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/mousetrap.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/api.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/locale.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/app.js?cb=7" type="text/javascript" charset="utf-8"></script>
+        <script src="js/app.config.js?cb=3" type="text/javascript" charset="utf-8"></script>
+        <script src="js/app.keyboardNav.js?cb=1" type="text/javascript" charset="utf-8"></script>
+        <script src="js/app.favs.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/app.history.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/ui.js?cb=4" type="text/javascript" charset="utf-8"></script>
+        <script src="js/ui.movies.js?cb=0" type="text/javascript" charset="utf-8"></script>
+        <script src="js/ui.tv_show.js?cb=0" type="text/javascript" charset="utf-8"></script>
+        <script src="js/ui.vpn_page.js?cb=2" type="text/javascript" charset="utf-8"></script>
+        <script src="js/ui.settings_page.js?cb=1" type="text/javascript" charset="utf-8"></script>
+        <script src="js/ui.loading_wrapper.js?cb=1" type="text/javascript" charset="utf-8"></script>
+        <script src="js/fetcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/utils.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/scrappers/movies/t4p_movies.js?cb=1" type="text/javascript" charset="utf-8"></script>
+        <script src="js/scrappers/movies/yts.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/scrappers/movies/anime.js?cb=2" type="text/javascript" charset="utf-8"></script>
+        <script src="js/scrappers/tv/t4p_tv.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/scrappers/tv/anime.js?cb=1" type="text/javascript" charset="utf-8"></script>
+        <script src="js/scrappers/subtitles/ysubs.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/scrappers/subtitles/torrentsapi.js" type="text/javascript" charset="utf-8"></script>
+    </head>
+    <body>
+
+		<div id="titlebar_buttons">
+			<div id="min" data-title-trans="min_window"></div>
+			<div id="max" data-title-trans="max_window"></div>
+			<div id="close" data-title-trans="close_window"></div>
+		</div>
+
+
+		<div id="header">
+
+			<div id="toolbar" class="nav sections">
+				<div class="btn movies activated" data-section="movies">
+					<div class="icon2 film"></div>
+					<span data-in-trans="movies">Movies</span>
+				</div>
+				<div class="btn tv" data-section="tv">
+					<div class="icon2 tv"></div>
+					<span data-in-trans="tv_shows">TV shows</span>
+				</div>
+			</div>
+
+			<div id="logo"></div>
+
+			<div id="menu_panel">
+				<div class="icon info" onclick="ui.about_page.show();"></div>
+				<div class="icon2 settings" onclick="ui.settings_page.show()"></div>
+				<div class="icon unlocked vpn" onclick="ui.vpn_page.show()"></div>
+				<div class="icon heart favs" onclick="app.favs.show()"></div>
+
+				<div id="search_cont">
+					<div class="icon search"></div>
+					<div id="autocomplete"></div>
+					<input type="text" id="search_input" tabindex="-1" placeholder="Search...">
+				</div>
+
+			</div>
+		</div>
+
+
+		<div class="container" id="catalog">
+
+				<div id="movies_catalog">
+					<div id="catalog_scroller"></div>
+				</div>
+
+		</div>
+
+		<div id="menu_teaser">
+			<div></div>
+			<div></div>
+		</div>
+
+		<div id="history_panel">
+			<div class="incont">
+				<div id="history_cont">
+					<div class="incont">
+						<div class="scroller"></div>
+					</div>
+				</div>
+
+				<div class="caption" data-in-trans="history">History</div>
+
+			</div>
+		</div>
+
+
+		<div id="bottom_panel">
+			<input tabindex="-1" type="range" value="10" min="0" max="125" onchange="ui.home.catalog.set_sizes(this.value);this.blur();" id="size_setter">
+		</div>
+
+		<div id="side_menu">
+			<div class="incont">
+				<div id="sidetools">
+					<div id="genres_box">
+
+					</div>
+					<div id="sortby_box">
+						<div style="font-size:11px;color:#fff"><b>Sort By:</b>&nbsp;
+							<select tabindex="-1" id="select_sortby" onchange="app.config.fetcher.sortBy=this.value;ui.home.catalog.show()">
+								<option value="seeds">Popularity</option>
+								<option value="dateadded">Date added</option>
+								<option value="year">Year</option>
+								<option value="title">Title</option>
+							</select>
+						</div>
+					</div>
+				</div>
+
+				<div id="mode_box">
+					<span class="activated" data-mode="imdb">IMDb</span> &nbsp;&#183;&nbsp; <span data-mode="anime">Anime</span> &nbsp;&#183;&nbsp; <span data-mode="cartoons">Cartoons</span>
+				</div>
+
+			</div>
+		</div>
+
+		<div id="loading_wrapper">
+			<div class="incont">
+				<div class="close" onclick="ui.loading_wrapper.hide()"></div>
+
+				<div class="displays">
+					<div class="percents">0%</div>
+				</div>
+				<div class="bars_cont"></div>
+
+					<div class="peers"><span class="val"></span> &nbsp; <span style="font-family:opensansbold">Peers</span></div>
+					<div class="speed"><span style="font-family:opensansbold">Speed</span> &nbsp; <span class="val"></span></div>
+					<div class="msg"></div>
+			</div>
+		</div>
+
+		<div class="gloss"></div>
+		<div class="gloss2"></div>
+		<div id="html_resource">
+
+				<div id="movie_cover_html">
+
+						[##poster_img##]
+
+						<div class="poster_slide">
+							<div class="poster_slide_cont">
+								<div class="poster_slide_bg"></div>
+								<div class="poster_slide_details">
+									<div class="title" style="font-size:[##titleFontSize##]px">
+										[##title##]
+										<div class="year" style="font-size:[##yearFontSize##]px"><span onclick="app.favs.toggle('[##id##]')" class="icon2 heart fav-btn [##infavs##]"></span> &nbsp; [##year##]</div>
+									</div>
+
+									<div class="details">
+										<div class="tools" style="display:none;font-size:[##toolsFontSize##]px"> <span class="icon2 heart fav-btn [##infavs##]"></span> &nbsp;<span class="icon2 download"></span></div>
+										<div class="stars" style="font-size:[##starsFontSize##]px">[##stars##]</div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+
+				</div>
+
+
+				<!-- start of movie slider -->
+				<div id="movie_slider_html">
+					<div class="backdrop"></div>
+					<div class="bottom_toolbox"></div>
+
+					<div id="watch_toolbox">
+						<div class="toolbox_content">
+							<div class="sep">
+								<div class="watch-btn" onclick="ui.movies.watch()">
+									<div class="icon2 play"></div>
+									<div class="caption" data-in-trans="watchItNow">WATCH IT NOW</div>
+								</div>
+							</div>
+							<div class="sep">
+								<div class="quality_selector 1080p" data-quality="1080p">&nbsp;</div>
+								<div class="quality_selector 720p" data-quality="720p">&nbsp;</div>
+								<div class="quality_selector 3d" data-quality="3D">&nbsp;</div>
+
+								<div class="selector torrent_selector">
+									<div class="selector_cont" onmouseleave="$(this).children('.activated').insertBefore($(this).children('.item').first());this.scrollTop=0"></div>
+									<div class="icon2 down2"></div>
+								</div>
+
+
+							</div>
+
+							<div class="sep" style="color:rgba(255,255,255,0.7);">
+
+
+
+
+								<div class="selector subs_selector">
+									<div class="selector_cont" onmouseleave="$(this).children('.activated').insertBefore($(this).children('.item').first());this.scrollTop=0"></div>
+									<div class="icon2 down2"></div>
+								</div>
+
+
+								<div class="tools">
+									<div class="tool icon2 heart [##infavs##] fav-btn"></div>
+									<div class="tool trailer" data-in-trans="trailer">Trailer</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+
+					<div class="movie_cont">
+						<div class="incont">
+							<img class="poster_img">
+							<div class="content">
+								<div class="title">[##title##]</div>
+								<div class="title_info_cont">
+
+
+									<div class="title_info genre"></div>
+									<div class="title_info"><span class="icon2 date"></span> &nbsp;[##year##]</div>
+									<div class="title_info"><span class="icon2 time"></span> <span class="runtime"></span></div>
+									<div class="title_info stars">[##stars##]</div>
+
+
+								</div>
+								<div class="synopsis"></div>
+								<div class="actors"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- end of movie slider -->
+
+
+				<!--start of tv show slider -->
+				<div id="tvshow_slider_html">
+					<div class="backdrop"></div>
+
+					<div class="head">
+						<div class="incont">
+
+							<div class="poster"></div>
+
+							<div class="info_cont">
+								<div class="title">[##title##]</div>
+								<div class="title_info_cont">
+
+
+									<div class="title_info genre"></div>
+									<div class="title_info runtime_cont"><span class="icon2 time"></span> <span class="runtime"></span></div>
+									<div class="title_info"><span class="icon2 date"></span> &nbsp;<span class="year">[##year##]</span></div>
+									<div class="title_info">[##stars##]</div>
+
+
+								</div>
+								<div class="synopsis"></div>
+
+							</div>
+						</div>
+					</div>
+
+					<div class="body">
+						<div class="column seasons"></div>
+						<div class="column episodes"></div>
+						<div class="column content">
+							<div class="episode_name"></div>
+							<div class="episode_info"><b class="episode_number"></b></div>
+							<div class="episode_overview"></div>
+
+
+								<div id="watch_toolbox">
+									<div class="toolbox_content">
+										<div class="sep">
+											<div class="watch-btn" onclick="ui.tv.watch()">
+												<div class="icon2 play"></div>
+												<div class="caption" data-in-trans="watchItNow">WATCH IT NOW</div>
+											</div>
+										</div>
+										<div class="sep">
+
+											<div class="selector subs_selector">
+												<div class="selector_cont" onmouseleave="$(this).children('.activated').insertBefore($(this).children('.item').first());this.scrollTop=0"></div>
+												<div class="icon2 down2"></div>
+											</div>
+
+
+											<div class="selector torrent_selector">
+												<div class="selector_cont" onmouseleave="$(this).children('.activated').insertBefore($(this).children('.item').first());this.scrollTop=0"></div>
+												<div class="icon2 down2"></div>
+											</div>
+
+
+										</div>
+										<!-- end seps -->
+									</div>
+
+								</div>
+								<!--toolbox end-->
+
+						</div>
+					</div>
+
+				</div>
+				<!-- end of tv show slider -->
+
+
+				<!--start vpn page -->
+				<div id="vpn_page_html">
+
+					<div class="cont">
+						<div class="vpn_icon"><div><span class="icon"></span></div></div>
+						<div class="vpn_button"></div>
+					</div>
+
+					<div style="color:#fff;font-size:16px;position:absolute;bottom:15px;left:15px;cursor:pointer;line-height:24px;text-align:center;" onclick="hostApp.openBrowser('https://kebrum.com/popcorntime')">
+						Sponsered by<br>
+						<span style="font-family:opensansbold;cursor:pointer">Kebrum VPN</span>
+					</div>
+
+				</div>
+				<!-- end vpn page -->
+
+
+				<div id="settings_page_html">
+
+					<table cellspacing="0" cellpadding="0" class="settings_table">
+						<tr>
+							<td class="title">
+								Settings
+							</td>
+							<td style="border-bottom:0">&nbsp;</td>
+						</tr>
+						<tr>
+							<td>
+								Interface
+							</td>
+							<td>
+								<div class="fieldset">
+									Default language:
+									<select class="langs">[##languages##]</select>
+								</div>
+
+								<div class="fieldset">
+									Theme:
+									<select><option>Classic</option></select>
+								</div>
+
+							</td>
+						</tr>
+						<tr>
+							<td>
+								Seeding
+							</td>
+							<td>
+								<div class="fieldset">
+									<input type="checkbox" name="seeding" onchange="app.config.set({hostApp:{enableSeeding:( this.value ? 1:0 )}})" disabled="true"> Enable seeding
+									<div style="font-size:10px;color:rgba(255,255,255,0.45);padding-top:4px;padding-left:23px"><b>Upload:</b>&nbsp; <span class="uploadSpeed">0 Kb/s</span></div>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								Subtitles
+							</td>
+							<td>
+								<div class="fieldset">
+									Font size:
+									<select class="fontSizes" onchange="app.config.set({hostApp:{subsFontSize:parseInt(this.value)}})">[##fontSizes##]</select>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								Downloads
+							</td>
+							<td style="border-bottom:0">
+								<div class="fieldset">
+									Cache folder:
+									<input type="text" class="temp_path txt" onclick="hostApp.setTempPath('app.config.updateView')" value="[##cache_path##]" style="font-size:12px;width:422px" readonly>
+									<u onclick="hostApp.OpenTempDir()">Open folder</u>
+
+								</div>
+								<div class="fieldset">
+                           <label>
+										<input type="checkbox" style="vertical-align:middle" class="cf_checkbox" onchange="app.config.set({hostApp:{cleanOnExit:parseInt(this.checked ? 1:0)}})">
+                              Clear cache folder on exit
+                           </label>
+								</div>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<!-- settings page end -->
+
+				<div id="about_page_html">
+
+						<div class="cover" style="background:url(css/images/about.png) no-repeat center center;background-size:cover;width:100%;height:100%;position:absolute;top:0;left:0;"></div>
+						<div class="legend">
+							<span style="font-family:opensansbold">Popcorn Time</span><br>
+							<b>Version:</b> [##version##]
+						</div>
+
+
+						<div class="shortcuts_cont">
+							<table>
+								<tr>
+									<td><span class="key">&#8592;</span> <span class="key">&#8593;</span> <span class="key">&#8594;</span> <span class="key">&#8595;</span></td>
+									<td>Navigate</td>
+								</tr>
+								<tr>
+									<td><span class="key">ENTER</span><span class="sep">/</span><span class="key">&nbsp; &nbsp; &nbsp; SPACE &nbsp; &nbsp; &nbsp;</span></td>
+									<td>Choose / Play</td>
+								</tr>
+								<tr>
+									<td><span class="key">CTRL</span><span class="sep">+</span><span class="key">+</span></td>
+									<td>Enlarge Covers</td>
+								</tr>
+								<tr>
+									<td><span class="key">CTRL</span><span class="sep">+</span><span class="key" style="padding:3px 9px">-</span></td>
+									<td>Reduce Covers</td>
+								</tr>
+								<tr>
+									<td><span class="key">CTRL</span><span class="sep">+</span><span class="key">F</span></td>
+									<td>Search</td>
+								</tr>
+								<tr>
+									<td><span class="key">&nbsp;TAB&nbsp;</span></td>
+									<td>Toggle Movies / TV shows</td>
+								</tr>
+								<tr>
+									<td><span class="key">SHIFT</span></td>
+									<td>Open / Close Side menu</td>
+								</tr>
+								<tr>
+									<td><span class="key">Esc</span></td>
+									<td>Close</td>
+								</tr>
+								<tr>
+									<td><span class="key">Q</span></td>
+									<td>Toggle Quality</td>
+								</tr>
+								<tr>
+									<td><span class="key">V</span></td>
+									<td>Mark as watched</td>
+								</tr>
+								<tr>
+									<td><span class="key">T</span></td>
+									<td>Watch trailer</td>
+								</tr>
+								<tr>
+									<td><span class="key">INSERT</span><span class="sep">/</span><span class="key">F</span></td>
+									<td>Add to bookmarks</td>
+								</tr>
+								<tr>
+									<td><span class="key">B</span></td>
+									<td>Go to bookmarks</td>
+								</tr>
+								<tr>
+									<td><span class="key">F5</span></td>
+									<td>Reload Interface</td>
+								</tr>
+							</table>
+						</div>
+
+
+						<div class="social">
+							<span class="icon2 facebook" onclick="hostApp.openBrowser('https://facebook.com/thetime4popcorn')"></span>
+							<span class="icon2 twitter" onclick="hostApp.openBrowser('https://twitter.com/time4popcorn')"></span>
+							<span class="icon2 forum" onclick="hostApp.openBrowser('http://forum.popcorn-time.se')"></span>
+							<span class="icon2 wordpress" onclick="hostApp.openBrowser('http://blog.popcorn-time.se')"></span>
+						</div>
+
+				</div>
+
+		</div>
+    </body>
+</html>
