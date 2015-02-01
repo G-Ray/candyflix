@@ -33,7 +33,7 @@ font-style: normal;
     font-family: 'opensansbold';
     src: url('fonts/OpenSans-Extrabold.eot');
     src: url('fonts/OpenSans-Extrabold.eot?') format('embedded-opentype'),
-         url('http://ui.popcorn-time.se/css/fonts/OpenSans-Extrabold.woff2') format('woff2'),
+         url('fonts/OpenSans-Extrabold.woff2') format('woff2'),
          url('fonts/OpenSans-Extrabold.woff') format('woff'),
          url('fonts/OpenSans-Extrabold.ttf') format('truetype'),
          url('fonts/OpenSans-Extrabold.svg') format('svg');

@@ -1,0 +1,67 @@
+CACHE MANIFEST
+#version1
+
+NETWORK:
+*
+
+CACHE:
+/
+/?version=0.5.0&os=win
+/?version=5.1&os=win
+/css/app.css?cb=5
+css/fonts/icomoon.eot
+css/fonts/icomoon.woff
+css/fonts/icomoon.ttf
+css/fonts/icomoon.svg
+css/fonts/opensans-regular-webfont.eot
+css/fonts/opensans-regular-webfont.woff
+css/fonts/opensans-regular-webfont.ttf
+css/fonts/opensans-regular-webfont.svg
+css/fonts/OpenSans-Extrabold.eot
+css/fonts/OpenSans-Extrabold.woff
+css/fonts/OpenSans-Extrabold.ttf
+css/fonts/OpenSans-Extrabold.svg
+/css/images/logo.png
+/css/images/white_arrow_down.gif
+/css/images/poster.png
+/css/images/about.png
+/js/jquery.min.js
+/js/iscroll.js
+/js/mousetrap.min.js
+/js/api.js
+/js/locale.js
+/js/app.js
+/js/app.config.js
+/js/app.keyboardNav.js
+/js/app.favs.js
+/js/app.history.js
+/js/ui.js
+/js/ui.movies.js
+/js/ui.tv_show.js
+/js/ui.vpn_page.js
+/js/ui.settings_page.js
+/js/ui.loading_wrapper.js
+/js/fetcher.js
+/js/utils.js
+/js/scrappers/movies/t4p_movies.js
+/js/scrappers/movies/yts.js
+/js/scrappers/movies/anime.js
+/js/scrappers/tv/t4p_tv.js
+/js/scrappers/tv/anime.js
+/js/scrappers/subtitles/ysubs.js
+/js/scrappers/subtitles/torrentsapi.js
+
+
+FALLBACK:
+/css/fonts/icomoon.eot css/fonts/icomoon.eot
+/css/fonts/icomoon.woff css/fonts/icomoon.woff
+/css/fonts/icomoon.ttf css/fonts/icomoon.ttf
+/css/fonts/icomoon.svg css/fonts/icomoon.svg
+/css/fonts/opensans-regular-webfont.eot css/fonts/opensans-regular-webfont.eot
+/css/fonts/opensans-regular-webfont.woff css/fonts/opensans-regular-webfont.woff
+/css/fonts/opensans-regular-webfont.ttf css/fonts/opensans-regular-webfont.ttf
+/css/fonts/opensans-regular-webfont.svg css/fonts/opensans-regular-webfont.svg
+/css/fonts/OpenSans-Extrabold.eot css/fonts/OpenSans-Extrabold.eot
+/css/fonts/OpenSans-Extrabold.woff css/fonts/OpenSans-Extrabold.woff
+/css/fonts/OpenSans-Extrabold.ttf css/fonts/OpenSans-Extrabold.ttf
+/css/fonts/OpenSans-Extrabold.svg css/fonts/OpenSans-Extrabold.svg
