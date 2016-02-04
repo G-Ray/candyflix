@@ -1,4 +1,11 @@
 {
+	"noTorrents": "Il n'y a pas de torrents disponibles",
+	"torrents": "Torrents",
+	"episode": "épisode",
+	"sortBy": "Trier par",
+	"genres": "Genres",
+	"genre": "Genre",
+
 	"back":"Retour",
 	"settings":"Paramètres",
   "quit": "Quitter",
@@ -24,16 +31,14 @@
   "UpgradeVersion": "Mettre à jour Popcorn Time",
   "UpgradeVersionDescription": "Popcorn Time %s a été mis à jour. Vous devriez le télécharger maintenant !",
 
-  "tv_shows":"Séries TV",
-  "trailer":"Bande-Annonce",
-  "min_window":"minimiser la fenêtre ",
-  "max_window":"maximiser la fenêtre",
-  "close_window":"proche ",
-  "error":"erreur",
-  "season":"saison",
-  "no_movies":"Aucun films trouvés",
-	"vlc_msg_1": "Cette vidéo ne peut pas être lue dans le navigateur. Merci d'ouvrir l'adresse suviante avec VLC (Media>Ouvrir un flux réseau) ou un logiciel similaire, et de conserver cette page ouverte.",
-	"vlc_msg_2": "Téléchargez les sous-titres que vous voulez, et glissez-déposez les dans la fenêtre de VLC.",
+  "tv_shows":"Séries",
+  "trailer":"Bande annonce",
+  "min_window":"Minimiser la fenêtre ",
+  "max_window":"Maximiser la fenêtre",
+  "close_window":"Fermer",
+  "error":"Erreur",
+  "season":"Saison",
+  "no_movies":"Pas de films trouvés",
 
 
     "all": "Populaire",
@@ -81,5 +86,11 @@
   "Cache location": "Répertoire de téléchargement",
   "Browse...": "Parcourir...",
   "Save": "Enregistrer",
-  "Auto clear cache": "Vider automatiquement le cache"
+  "Auto clear cache": "Vider automatiquement le cache",
+
+
+  "VpnDisabled":"RPV DÉSACTIVÉ !",
+  "VpnAlert":"Il est fortement recommandé d'utiliser le RPV <br>pour éviter des risques inutiles.",
+  "TurnOnVpn": "Activer RPV",
+  "continue":"Continuer"
 }

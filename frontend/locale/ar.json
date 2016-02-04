@@ -1,7 +1,16 @@
 {
+
+	"noTorrents": "ليس هناك السيول متاحة",
+	"torrents": "السيول",
+	"episode": "حادثة",
+	"sortBy": "الترتيب حسب",
+	"genres": "الأنواع",
+	"genre": "نوع أدبي",
+
+
 	"back":"ظهر",
 	"settings":"إعدادات",
-	
+
   "quit": "إنهاء",
   "cancel": "إلغاء",
   "beforeQuit": "هل أنت متأكد من أنك ترغب بالخروج؟",
@@ -28,7 +37,7 @@
   "error":"خطأ",
   "season":"الموسم",
   "no_movies":"لا فيلم وجدت",
-  
+
     "all": "اكثر افلام شهره",
     "action": "الآكشن",
     "adventure": "مغامرة",
@@ -53,7 +62,7 @@
     "thriller": "إثارة",
     "war": "حرب",
     "western": "افلام غربية",
-  
+
   "french": "الفرنسية",
   "english": "الإنكليزية",
   "spanish": "الإسبانية",
@@ -62,5 +71,10 @@
   "turkish": "التركية",
   "dutch": "الهولنديه",
   "italian": "الايطالية",
-  "arabic": "العربية"
+  "arabic": "العربية",
+
+  "VpnDisabled":"<div style='direction:rtl'>VPN  غير مٌتاح!</div>",
+  "VpnAlert":"<div style='direction:rtl'>ينصح بشدة استخدام VPN لتجنب المخاطر الغير ضرورية.</div>",
+  "TurnOnVpn": "<div style='direction:rtl;cursor:pointer'>تشغيل VPN</div>",
+  "continue":"استمرار"
 }

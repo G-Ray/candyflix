@@ -1,4 +1,11 @@
 {
+	"noTorrents": "There is no available torrents",
+	"torrents": "Torrents",
+	"episode": "Episode",
+	"sortBy": "Sort By",
+	"genres": "Genres",
+	"genre": "Genre",
+
 	"back":"înapoi",
 	"settings":"Setări",
   "quit": "Închide",
@@ -23,7 +30,7 @@
 
   "UpgradeVersion": "Actualizează Popcorn Time",
   "UpgradeVersionDescription": " a fost lansat. Îți sugerăm să treci la noua versiune!",
-  
+
   "tv_shows":"emisiuni TV",
   "trailer":"rulotă",
   "min_window":"minimiza fereastra",
@@ -32,7 +39,7 @@
   "error":"eroare",
   "season":"sezon",
   "no_movies":"ici un film găsit",
-  
+
     "all": "Popular",
     "action": "Acțiune",
     "adventure": "Aventură",
@@ -56,6 +63,12 @@
     "sport": "Sport",
     "thriller": "Thriller",
     "war": "Război",
-    "western": "Western"
-  
+    "western": "Western",
+
+
+  "VpnDisabled":"VPN DISABLED!",
+  "VpnAlert":"IT IS HIGHLY RECOMMENDED TO USE VPN <br>TO AVOID UNNECESSARY RISKS",
+  "TurnOnVpn": "TURN ON VPN",
+  "continue":"Continue"
+
 }

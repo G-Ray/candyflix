@@ -16,7 +16,7 @@
 	"noResults": "No results found for your query.",
 	"search": "Search",
 	"movies": "Movies",
-	"tv_shows": "TV-Shows",
+	"tv_shows": "TV shows",
 	"trailer": "Trailer",
 	"subtitledIn": "Subtitled in",
 	"quality": "Quality",
@@ -33,8 +33,6 @@
 	"error": "Error",
 	"season": "Season",
 	"no_movies": "No movies found",
-	"vlc_msg_1": "This video can not be played with the browser. Please open this adress with VLC (Media>Open Network Stream) or any similar software, and keep this page opened.",
-	"vlc_msg_2": "Download the subtitle you want, and drag and drop the file into the vlc window.",
 	"all": "Popular",
 	"action": "Action",
 	"adventure": "Adventure",
@@ -58,5 +56,11 @@
 	"sport": "Sport",
 	"thriller": "Thriller",
 	"war": "War",
-	"western": "Western"
+	"western": "Western",
+
+
+  "VpnDisabled":"VPN DISABLED!",
+  "VpnAlert":"IT IS HIGHLY RECOMMENDED TO USE VPN <br>TO AVOID UNNECESSARY RISKS",
+  "TurnOnVpn": "TURN ON VPN",
+  "continue":"Continue"
 }

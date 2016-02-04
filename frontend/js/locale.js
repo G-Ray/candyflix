@@ -3,49 +3,61 @@ var locale = {
 	default_language: 'en',
 	langs: {
 		en:"English",
-		es:"Español",
+		nl:"Dutch",
 		pt:"Português",
+		es:"Español",
 		fr:"Français",
 		it:"Italiano",
 		de:"Deutsch",
 		ru:"Pусский",
+		kr:"한국말",
 		ar:"العربية",
 		ro:"Român",
 		he:"עברית",
 		pl:"Polski",
+		tr:"Türkçe",
 	},
 	construct:function(callback){
+		if(!localStorage.getItem('localeCb3')){
+			localStorage.setItem('localeCb3','1');
+			localStorage.removeItem('locale_words')
+		}
 
-		locale.language = navigator.language.substring(0,2) || locale.default_language;
+		locale.language = localStorage.getItem('locale') || locale.default_language;
 
-		var
-		words = localStorage.getItem('locale_words');
-		try{ words = JSON.parse(words) }catch(e){words = false}
+		var words = localStorage.getItem('locale_words');
+		if(words)
+			try{ words = JSON.parse(words) }catch(e){words = false;console.log(e.message)}
+
+
 
 		if(!words){
-			$.get('/locale/'+locale.language+'.json', function(json){
+			$.get('/locale/'+locale.language+'.json?id=5', function(json){
 
 				try{
-					locale.words = json;
-					localStorage.setItem('locale_words', json);
+					locale.words = typeof json == 'object' ? json : JSON.parse(json);
+					localStorage.setItem('locale_words', JSON.stringify(locale.words));
 					localStorage.setItem('locale', locale.language);
 					callback();
 				}
 				catch(e){
 					if(localStorage.getItem('locale_words')){
-						logger.log('error_parsing_locale_' + language);
+						logger.log('error_parsing_locale_' + locale.language);
 						localStorage.removeItem('locale_words');
 						locale.construct();
 
 					}
-					else logger.log('error_parsing_locale_en');
+					else{
+						console.log(e.message);
+						logger.log('error_parsing_locale_en');
+					}
 
 				}
 
-			})
+			}, 'json')
 			.fail(function() {
 					if(localStorage.getItem('locale_words')){
-						logger.log('error_parsing_locale_' + language);
+						logger.log('error_parsing_locale_' + locale.language);
 						localStorage.removeItem('locale_words');
 						locale.construct();
 
@@ -54,6 +66,7 @@ var locale = {
 			});
 		}
 		else{
+
 			locale.words = words;
 			callback();
 		}
@@ -104,6 +117,7 @@ var locale = {
 		"bhutani":		"dz",
 		"bihari":		"bh",
 		"bislama":		"bi",
+		"bosnian":		"bs",
 		"breton":		"br",
 		"bulgarian":	"bg",
 		"burmese":		"my",

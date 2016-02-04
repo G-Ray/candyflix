@@ -1,4 +1,10 @@
 {
+	"noTorrents": "לא נמצאו טורנטים",
+	"torrents": "טורנטים",
+	"episode": "פרק",
+	"sortBy": "סדר לפי",
+	"genres": "ז'אנרים",
+	"genre": "ז'אנר",
 	"back":"חזור",
 	"settings":"הגדרות",
   "quit": "יציאה",
@@ -12,7 +18,7 @@
   "movies": "סרטים",
   "subtitledIn": "כתוביות",
   "quality": "איכות",
-  "watchItNow": "צפייה",
+  "watchItNow": "צפה עכשיו",
   "durationUnit": "דקות",
   "connecting": "מתחבר...",
   "startingDownload": "מתחיל בהורדה...",
@@ -20,14 +26,14 @@
   "UpgradeVersion": "עדכון Popcorn Time",
   "UpgradeVersionDescription": "Popcorn Time %s שוחררה. כדאי לעדכן עכשיו!",
   "tv_shows":"סדרות",
-  "trailer":"טריילרים",
+  "trailer":"טריילר",
   "min_window":"מזער חלון",
   "max_window":"הגדל חלון",
   "close_window":"סגור",
   "error":"תקלה",
   "season":"עונה",
   "no_movies":"לא נמצא סרט",
-  
+
     "all": "פופולרי",
     "action": "פעולה",
     "adventure": "הרפתקאות",
@@ -63,5 +69,11 @@
   "dutch": "הולנדית",
   "italian": "איטלקית",
   "hebrew": "עברית",
-  "arabic": "ערבית"
+  "arabic": "ערבית",
+
+
+  "VpnDisabled":"<div style='direction:rtl'>VPN לא פעיל!</div>",
+  "VpnAlert":"<div style='direction:rtl'>בכדי להמנע מסיכונים רבים הקשורים בהורדה <br>מומלץ להפעיל את החיבור ל-VPN</div>",
+  "TurnOnVpn": "<div style='direction:rtl;cursor:pointer'>הפעל VPN</div>",
+  "continue":"המשך"
 }

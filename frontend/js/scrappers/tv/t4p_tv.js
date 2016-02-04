@@ -1,12 +1,16 @@
-fetcher.scrappers.t4p_tv = function(genre, keywords, page, callback){
+fetcher.scrappers.t4p_tv = function(genre, keywords, page, callback, fallback){
 
+	var domain =  'http://butter.vodo.net/popcorn';
+	if(fallback) {
+		domain = 'http://butter.vodo.net/popcorn';
+	}
 
 
 		if(genre=='all')
 			genre = !1;
 
 
-		var url = 'http://api.torrentsapi.com/shows?formats=mp4&cb='+Math.random()+'&sort=seeds&page=' + ui.home.catalog.page;
+		var url = ''+domain+'?cb='+Math.random()+'&sort=' + app.config.fetcher.sortBy + '&page=' + ui.home.catalog.page;
 
         if (keywords) {
             url += '&keywords=' + keywords;
@@ -19,61 +23,69 @@ fetcher.scrappers.t4p_tv = function(genre, keywords, page, callback){
         if (page && page.toString().match(/\d+/)) {
            url += '&set=' + page;
         }
-
+		url = 'https://json2jsonp.com/?url='+encodeURIComponent(url)+'';
 		$.ajax({
 			url: url,
-			dataType:'json',
-			error:function(){callback(false)},
+			dataType:'jsonp',
+			jsonpCallback: 'cbfunc',
+			contentType: "application/json",
+			error:function(){
+			if(!fallback) {
+				fetcher.scrappers.t4p_tv(genre, keywords, page, callback, true);
+			} else {
+				callback(false)
+			}
+			},
 			success:function(data){
 
 				var movies = [],
 					memory = {};
-
-				if (data.error || typeof data.MovieList === 'undefined') {
-					callback(false)
+				delete data.downloads;
+				if (data.error || typeof data.downloads === 'undefined') {
+					if(!fallback) {
+						fetcher.scrappers.t4p_tv(genre, keywords, page, callback, true);
+					} else {
+						callback(false)
+					}
 					return;
 				}
 
-				data.MovieList.forEach(function (movie){
+				data.downloads.forEach(function (movie){
 					// No imdb, no movie.
 
-					if( typeof movie.imdb != 'string' || movie.imdb.replace('tt', '') == '' ){ return;}
+					if( typeof movie.ImdbCode != 'string' || movie.ImdbCode.replace('tt', '') == '' ){ return;}
 
 			try{
 
 					// Temporary object
 					var movieModel = {
-						imdb:       movie.imdb,
-						title:      movie.title,
-						year:       movie.year ? movie.year : '&nbsp;',
-						runtime:    movie.runtime,
+						id:       movie.ImdbCode,
+						imdb:       movie.ImdbCode,
+						title:      movie.MovieTitleClean,
+						year:       movie.MovieYear ? movie.MovieYear : '&nbsp;',
+						runtime:    movie.Runtime,
 						synopsis:   "",
-						voteAverage:parseFloat(movie.rating),
+						imdb_rating: parseFloat(movie.MovieRating),
 
-						image:      movie.poster_med,
-						bigImage:   movie.poster_big,
-						backdrop:   "",
-						videos:     {},
-						seeders:    movie.torrent_seeds,
-						leechers:   movie.torrent_peers,
+						poster_small:	movie.CoverImage,
+						poster_big:		movie.CoverImage,
+						seeders:    movie.TorrentSeeds,
+						leechers:   movie.TorrentPeers,
 						trailer:	movie.trailer ? 'http://www.youtube.com/embed/' + movie.trailer + '?autoplay=1': false,
-						stars:		utils.movie.rateToStars(parseFloat(movie.rating)),
-						
-						hasMetadata:false,
-						hasSubtitle:false
+						stars:		utils.movie.rateToStars(parseFloat(movie.MovieRating))
 					};
 
 
 
-					var stored = memory[movie.imdb];
+					var stored = memory[movie.ImdbCode];
 
 					// Create it on memory map if it doesn't exist.
 					if (typeof stored === 'undefined') {
-						stored = memory[movie.imdb] = movieModel;
+						stored = memory[movie.ImdbCode] = movieModel;
 					}
 
 					// Push it if not currently on array.
-					if (movies.indexOf(stored) === -1) {
+					if (movies.indexOf(stored) === -1 && !ui.home.catalog.items[movie.ImdbCode.toString()]) {
 						movies.push(stored);
 					}
 			}catch(e){ console.log(e.message);}
@@ -81,7 +93,7 @@ fetcher.scrappers.t4p_tv = function(genre, keywords, page, callback){
 				});
 
 				callback(movies)
-			},
+			}
 		});
 
 }

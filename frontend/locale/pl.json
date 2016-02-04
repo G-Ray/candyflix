@@ -1,4 +1,11 @@
 {
+
+	"noTorrents": "Brak dostępnych torrentów",
+	"torrents": "torrenty",
+	"episode": "epizod",
+	"sortBy": "Sortuj według",
+	"genres": "Gatunki",
+	"genre": "Genre",
 	"back":"Wstecz",
 	"settings":"Ustawienia ",
   "quit": "Wyjdź",
@@ -27,7 +34,7 @@
   "error":"błąd",
   "season":"sezon",
   "no_movies":"Film nie znaleziono",
-  
+
     "all": "Popularne",
     "action": "Akcja",
     "adventure": "Przygodowy",
@@ -52,7 +59,7 @@
     "thriller": "Thriller",
     "war": "Wojenny",
     "western": "Western",
-  
+
   "french": "francusku",
   "english": "angielsku",
   "spanish": "hiszpańsku",
@@ -62,5 +69,11 @@
   "turkish": "turecku",
   "dutch": "holendersku",
   "italian": "włosku",
-  "polish": "polsku"
+  "polish": "polsku",
+
+
+  "VpnDisabled":"VPN DISABLED!",
+  "VpnAlert":"IT IS HIGHLY RECOMMENDED TO USE VPN <br>TO AVOID UNNECESSARY RISKS",
+  "TurnOnVpn": "TURN ON VPN",
+  "continue":"Continue"
 }

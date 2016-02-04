@@ -1,5 +1,12 @@
 {
-	"back":"Back",
+	"noTorrents": "Non ci sono torrent disponibili",
+	"torrents": "Torrent",
+	"episode": "episodio",
+	"sortBy": "Ordina per",
+	"genres": "Generi",
+	"genre": "Genere",
+
+	"back":"Indietro",
 	"settings":"Impostazioni",
   "quit": "Esci",
   "cancel": "Annulla",
@@ -10,28 +17,28 @@
   "noResults": "Nessun risultato trovato per i tuoi criteri di ricerca.",
 
   "search": "Cerca",
-  "movies": "Films",
+  "movies": "Film",
 
-  "subtitledIn": "Sottotitoli",
+  "subtitledIn": "Sottotitoli in",
   "quality": "Qualità",
   "watchItNow": "Guarda ora",
   "durationUnit": "min",
 
   "connecting": "Connessione...",
   "startingDownload": "Inizio Download...",
-  "downloading": "Downloading...",
+  "downloading": "Download in corso...",
 
   "UpgradeVersion": "Aggiorna Popcorn Time",
   "UpgradeVersionDescription": "Popcorn Time %s é stato rilasciato. Dovresti scaricarlo ora!",
-  
+
   "tv_shows":"Programmi TV",
   "trailer":"trailer",
-  "min_window":"finestra minimizzare",
-  "max_window":"massimizzare la finestra",
-  "close_window":"vicino",
+  "min_window":"Riduci a icona",
+  "max_window":"Ingrandisci",
+  "close_window":"Chiudi",
   "error":"errore",
   "season":"stagione",
-  "no_movies":"trovato nessun film",
+  "no_movies":"Nessun film trovato",
 
 
     "all": "Popolari",
@@ -41,7 +48,7 @@
     "biography": "Biografia",
     "comedy": "Commedia",
     "crime": "Crimine",
-    "documentary": "Documentari",
+    "documentary": "Documentario",
     "drama": "Drammatico",
     "family": "Per famiglie",
     "fantasy": "Fantasy",
@@ -66,5 +73,11 @@
   "portuguese": "Portoghese",
   "romanian": "Rumeno",
   "turkish": "Turco",
-  "italian":"Italiano"
+  "italian":"Italiano",
+
+
+  "VpnDisabled":"VPN DISATTIVATA!",
+  "VpnAlert":"per evitare inutili rischi si consiglia di usare la VPN.",
+  "TurnOnVpn": "Abilita VPN",
+  "continue":"Continua"
 }

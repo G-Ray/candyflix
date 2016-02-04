@@ -19,7 +19,13 @@ var utils = {
 
 	tokenizer:function(tokens, str){
 		return str.replace(/\[##([^#]+)##\]/g, function(){
-			return tokens[arguments[1]] || '';
+
+			var global_tokens = {
+
+				toolbox_html:$('#watch_toolbox').html()
+			}
+
+			return tokens[arguments[1]] || global_tokens[arguments[1]] || '';
 		});
 	},
 
@@ -32,7 +38,7 @@ var utils = {
 				'<span class="icon star_empty"></span>',
 				'<span class="icon star_empty"></span>',
 				'<span class="icon star_empty"></span>'
-				].join();
+				].join("");
 
 
 			var
@@ -60,17 +66,14 @@ var utils = {
 		$('#msg').show();
 		setTimeout(function(){
 			$('#msg').hide();
-		},3000)
+		},5500)
 	},
 
 	url_response:{},
 	url_request:function(url, callback){
 
-		utils.url_response[url] = callback;
-		api.send({url_request:url})
-
-		//$.get(url,callback);
-
+		 utils.url_response[url] = callback;
+		 try{hostApp.url_request(url);}catch(e){}
 	},
 
 	calculateTorrentHealth: function (seeders, peers) {
@@ -101,7 +104,13 @@ var utils = {
           return 'bad';
         }
       }
-    }
+    },
+
+    popupwindow: function(url, name, w, h){
+	  var left = (screen.width/2)-(w/2);
+	  var top = (screen.height/2)-(h/2);
+	  return window.open(url, name, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
+	}
 
 },
 resource = {
@@ -143,6 +152,7 @@ resource = {
 			"eu":"es",
 			"be":"by",
 			"bg":"bg",
+			"bs":"bs",
 			"ca":"es",
 			"zh":"cn",
 			"hr":"hr",
@@ -179,6 +189,7 @@ resource = {
 			"mn":"mn",
 			"nb":"no",
 			"nn":"no",
+			"no":"no",
 			"pl":"pl",
 			"pt":"br",
 			"pt":"pt",
@@ -193,6 +204,7 @@ resource = {
 			"es":"es",
 			"sw":"ke",
 			"sv":"se",
+			"sr":"sr",
 			"syr":"sy",
 			"ta":"in",
 			"tt":"ru",

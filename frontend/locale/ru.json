@@ -1,4 +1,12 @@
 {
+
+	"noTorrents": "Нет доступных торрентов",
+	"torrents": "Торренты",
+	"episode": "Эпизоды",
+	"sortBy": "Сортировать по",
+	"genres": "Жанры",
+	"genre": "Жанр",
+
 	"back":"назад ",
 	"settings":"настройки",
   "quit": "Выход",
@@ -28,7 +36,7 @@
   "error":"ошибка",
   "season":"сезон",
   "no_movies":"нет фильма найдено",
-  
+
     "all": "Популярное",
     "action": "Боевик",
     "adventure": "Приключения",
@@ -53,7 +61,7 @@
     "thriller": "Триллер",
     "war": "Военный",
     "western": "Вестерн",
-  
+
   "french": "Французский",
   "english": "Английский",
   "spanish": "Испанский",
@@ -64,5 +72,11 @@
   "dutch": "Голландский",
   "italian": "Итальянский",
   "danish": "Датский",
-  "arabic": "Арабский"
+  "arabic": "Арабский",
+
+
+  "VpnDisabled":"VPN DISABLED!",
+  "VpnAlert":"IT IS HIGHLY RECOMMENDED TO USE VPN <br>TO AVOID UNNECESSARY RISKS",
+  "TurnOnVpn": "TURN ON VPN",
+  "continue":"Continue"
 }

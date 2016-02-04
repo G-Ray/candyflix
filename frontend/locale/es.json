@@ -1,11 +1,20 @@
 {
-  "back":"retroceso",
+
+	"noTorrents": "No hay torrents disponibles",
+	"torrents": "Torrents",
+	"episode": "episodio ",
+	"sortBy": "Ordenado por",
+	"genres": "Géneros",
+	"genre": "género",
+
+
+  "back":"volver",
   "settings":"Configuración",
   "quit": "Salir",
   "cancel": "Cancelar",
   "beforeQuit": "¿Está seguro de que desea salir?",
   "loading": "Cargando...",
-  "loadingVideo": "Cargando video, espere unos instantes",
+  "loadingVideo": "Cargando vídeo, espere por favor",
   "searchLoading": "Buscando...",
   "noResults": "No se encontraron resultados.",
   "search": "Buscar",
@@ -19,14 +28,14 @@
   "downloading": "Descargando...",
   "UpgradeVersion": "Actualizar Popcorn Time",
   "UpgradeVersionDescription": "Popcorn Time %s acaba de salir. ¡Descargala ahora!",
-  "tv_shows":"programas TV",
+  "tv_shows":"series TV",
   "trailer":"tráiler",
-  "min_window":"ventana de minimizar",
-  "max_window":"maximizar la ventana",
+  "min_window":"minimizar ventana",
+  "max_window":"maximizar ventana",
   "close_window":"cerrar",
   "error":"error",
   "season":"temporada",
-  "no_movies":"ninguna película encontrado",
+  "no_movies":"ninguna película encontrada",
     "all": "Popular",
     "action": "Acción",
     "adventure": "Aventura",
@@ -50,5 +59,12 @@
     "sport": "Deportes",
     "thriller": "Thriller",
     "war": "Bélica",
-    "western": "Western"  
+    "western": "Western",
+
+
+  "VpnDisabled":"¡VPN DESCONECTADO!",
+  "VpnAlert":"Se recomienda usar una conexión VPN para evitar <br>riesgos innecesarios.",
+  "TurnOnVpn": "Conectar VPN",
+  "continue":"Continuar"
+
 }
