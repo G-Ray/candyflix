@@ -2,12 +2,12 @@ fetcher.scrappers.anime_movies = function(genre, keywords, page, callback, fallb
 
 		if(genre=='all')
 			genre = !1;
-		var domain =  'http://butter.vodo.net/popcorn';
+		var domain =  '//api.anime.apidomain.info';
 		if(fallback) {
-			domain = 'http://butter.vodo.net/popcorn';
+			domain = '//apinc.anime.apidomain.info';
 		}
 
-		var url = domain+'?sort=' + app.config.fetcher.sortBy + '&cb='+Math.random()+'&quality=720p,1080p,3d&page=' + ui.home.catalog.page;
+		var url = domain+'/list?sort=' + app.config.fetcher.sortBy + '&cb='+Math.random()+'&quality=720p,1080p,3d&page=' + ui.home.catalog.page;
 
 
         if (keywords) {
@@ -21,12 +21,10 @@ fetcher.scrappers.anime_movies = function(genre, keywords, page, callback, fallb
         if (page && page.toString().match(/\d+/)) {
            url += '&set=' + page;
         }
-	url = 'https://json2jsonp.com/?url='+encodeURIComponent(url)+'';
+
 		$.ajax({
 			url: url,
-			dataType:'jsonp',
-			jsonpCallback: 'cbfunc',
-			contentType: "application/json",
+			dataType:'json',
 			timeout:9000,
 			error:function(){
 				if(!fallback) {
@@ -40,8 +38,7 @@ fetcher.scrappers.anime_movies = function(genre, keywords, page, callback, fallb
 				var movies = [],
 					memory = {};
 
-				delete data.downloads;
-				if (data.error || typeof data.downloads === 'undefined') {
+				if (data.error || typeof data.MovieList === 'undefined') {
 					if(!fallback) {
 						fetcher.scrappers.anime_movies(genre, keywords, page, callback, true);
 					} else {
@@ -50,32 +47,39 @@ fetcher.scrappers.anime_movies = function(genre, keywords, page, callback, fallb
 					return;
 				}
 
-				data.downloads.forEach(function(movie){
-					if( typeof movie.ImdbCode != 'string' || movie.ImdbCode.replace('tt', '') == '' ){ return;}
+				data.MovieList.forEach(function(movie){
+					if( typeof movie.imdb != 'string' || movie.imdb.replace('tt', '') == '' ){ return;}
 
 					try{
+							var torrents = {};
+							movie.items.forEach(function(torrent){
+								if(torrent.type===0 && !torrents[torrent.quality]){
+									torrents[torrent.quality] = torrent.torrent_url
+								}
+							});
+
 
 							var movieModel = {
-								id:       	movie.ImdbCode,
-								imdb:       movie.ImdbCode,
-								title:      movie.MovieTitleClean,
-								year:       movie.MovieYear ? movie.MovieYear : '&nbsp;',
-								runtime:    movie.Runtime,
-								synopsis:   movie.Synopsis,
-								voteAverage:parseFloat(movie.MovieRating),
+								id:       	movie.imdb,
+								imdb:       movie.imdb,
+								title:      movie.title,
+								year:       movie.year ? movie.year : '&nbsp;',
+								runtime:    movie.runtime,
+								synopsis:   movie.description,
+								voteAverage:parseFloat(movie.rating),
 
-								poster_small:	movie.CoverImage,
-								poster_big:   	movie.CoverImage,
+								poster_small:	movie.poster_med,
+								poster_big:   	movie.poster_big,
 
-								quality:    movie.Quality,
-								torrent:    movie.TorrentUrl,
-								magnet :    movie.TorrentUrl,
-								torrents:   [],
+								quality:    movie.items[0].quality,
+								torrent:    movie.items[0].torrent_url,
+								magnet :    movie.items[0].torrent_magnet,
+								torrents:   movie.items,
 								videos:     {},
-								seeders:    movie.TorrentSeeds,
-								leechers:   movie.TorrentPeers,
+								seeders:    movie.torrent_seeds,
+								leechers:   movie.torrent_peers,
 								trailer:	movie.trailer ? 'http://www.youtube.com/embed/' + movie.trailer + '?autoplay=1': false,
-								stars:		utils.movie.rateToStars(parseFloat(movie.MovieRating)),
+								stars:		utils.movie.rateToStars(parseFloat(movie.rating)),
 
 								hasMetadata:false,
 								hasSubtitle:false
@@ -83,11 +87,11 @@ fetcher.scrappers.anime_movies = function(genre, keywords, page, callback, fallb
 
 
 
-							var stored = memory[movie.ImdbCode];
+							var stored = memory[movie.imdb];
 
 							// Create it on memory map if it doesn't exist.
 							if (typeof stored === 'undefined') {
-								stored = memory[movie.ImdbCode] = movieModel;
+								stored = memory[movie.imdb] = movieModel;
 							}
 
 							if (stored.quality !== movieModel.quality && movieModel.quality === '720p') {
@@ -99,7 +103,7 @@ fetcher.scrappers.anime_movies = function(genre, keywords, page, callback, fallb
 							stored.torrents[movie.Quality] = movie.TorrentUrl;
 
 							// Push it if not currently on array.
-							if (movies.indexOf(stored) === -1 && !ui.home.catalog.items[movie.ImdbCode.toString()]) {
+							if (movies.indexOf(stored) === -1) {
 								movies.push(stored);
 							}
 					}catch(e){}
@@ -113,7 +117,7 @@ fetcher.scrappers.anime_movies = function(genre, keywords, page, callback, fallb
 				else{
 					callback(movies)
 				}
-			}
+			},
 		});
 
 }

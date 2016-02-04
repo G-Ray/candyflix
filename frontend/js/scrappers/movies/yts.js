@@ -2,7 +2,7 @@ fetcher.scrappers.yts = function(genre, keywords, page, callback){
 
 
 
-		var url = 'http://yts.to/api/list.json?genre=' + genre + '&sort=seeds&limit=50&set=' + ui.home.catalog.page;
+		var url = '//yts.to/api/list.json?genre=' + genre + '&sort=seeds&limit=50&set=' + ui.home.catalog.page;
 
         if (keywords) {
             url += '&keywords=' + keywords;

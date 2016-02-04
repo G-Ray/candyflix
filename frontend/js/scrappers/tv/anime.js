@@ -1,12 +1,14 @@
-fetcher.scrappers.anime_tv = function(genre, keywords, page, callback){
+fetcher.scrappers.anime_tv = function(genre, keywords, page, callback, fallback){
 
 
 
 		if(genre=='all')
 			genre = !1;
-
-
-		var url = 'http://butter.vodo.net/popcorn?cb='+Math.random()+'&sort=' + app.config.fetcher.sortBy + '&page=' + ui.home.catalog.page;
+	var domain =  '//api.anime.apidomain.info';
+	if(fallback) {
+		domain = '//apinc.anime.apidomain.info';
+	}
+	var url = domain+'/shows?cb='+Math.random()+'&sort=' + app.config.fetcher.sortBy + '&page=' + ui.home.catalog.page;
 
         if (keywords) {
             url += '&keywords=' + keywords;
@@ -20,61 +22,68 @@ fetcher.scrappers.anime_tv = function(genre, keywords, page, callback){
            url += '&set=' + page;
         }
 
-	url = 'https://json2jsonp.com/?url='+encodeURIComponent(url)+'';
 		$.ajax({
 			url: url,
-			dataType:'jsonp',
-			jsonpCallback: 'cbfunc',
-			contentType: "application/json",
-			error:function(){callback(false)},
+			dataType:'json',
+			error:function(){
+				if(!fallback) {
+					fetcher.scrappers.anime_tv(genre, keywords, page, callback, true);
+				} else {
+					callback(false)
+				}
+			},
 			success:function(data){
 
 				var movies = [],
 					memory = {};
 
-				delete data.downloads;
-				if (data.error || typeof data.downloads === 'undefined') {
-					callback(false)
+				if (data.error || typeof data.MovieList === 'undefined') {
+					if(!fallback) {
+						fetcher.scrappers.anime_tv(genre, keywords, page, callback, true);
+					} else {
+						callback(false)
+					}
 					return;
 				}
 
-				data.downloads.forEach(function (movie){
+
+				data.MovieList.forEach(function (movie){
 					// No imdb, no movie.
 
-					if( typeof movie.ImdbCode != 'string' || movie.ImdbCode.replace('tt', '') == '' ){ return;}
+					if( typeof movie.imdb != 'string' || movie.imdb.replace('tt', '') == '' ){ return;}
 
 			try{
 
 					// Temporary object
 					var movieModel = {
-						id:       movie.ImdbCode,
-						imdb:       movie.ImdbCode,
-						title:      movie.MovieTitleClean,
-						year:       movie.MovieYear ? movie.MovieYear : '&nbsp;',
-						runtime:    movie.Runtime,
-						synopsis:   movie.Synopsis,
-						imdb_rating: parseFloat(movie.MovieRating),
+						id:       movie.imdb,
+						imdb:       movie.imdb,
+						title:      movie.title,
+						year:       movie.year ? movie.year : '&nbsp;',
+						runtime:    movie.runtime,
+						synopsis:   movie.description,
+						imdb_rating: parseFloat(movie.rating),
 
-						poster_small:	movie.CoverImage,
-						poster_big:		movie.CoverImage,
-						seeders:    movie.TorrentSeeds,
-						leechers:   movie.TorrentPeers,
+						poster_small:	movie.poster_med,
+						poster_big:		movie.poster_big,
+						seeders:    movie.torrent_seeds,
+						leechers:   movie.torrent_peers,
 						trailer:	movie.trailer ? 'http://www.youtube.com/embed/' + movie.trailer + '?autoplay=1': false,
-						stars:		utils.movie.rateToStars(parseFloat(movie.MovieRating))
+						stars:		utils.movie.rateToStars(parseFloat(movie.rating)),
 
 					};
 
 
 
-					var stored = memory[movie.ImdbCode];
+					var stored = memory[movie.imdb];
 
 					// Create it on memory map if it doesn't exist.
 					if (typeof stored === 'undefined') {
-						stored = memory[movie.ImdbCode] = movieModel;
+						stored = memory[movie.imdb] = movieModel;
 					}
 
 					// Push it if not currently on array.
-					if (movies.indexOf(stored) === -1 && !ui.home.catalog.items[movie.ImdbCode.toString()]) {
+					if (movies.indexOf(stored) === -1) {
 						movies.push(stored);
 					}
 			}catch(e){ console.log(e.message);}
@@ -82,7 +91,7 @@ fetcher.scrappers.anime_tv = function(genre, keywords, page, callback){
 				});
 
 				callback(movies)
-			}
+			},
 		});
 
 }

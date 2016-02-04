@@ -1,4 +1,4 @@
-<!doctype html>
+<!doctype htmlwe>
 <html>
     <head>
         <meta charset="UTF-8">
@@ -6,35 +6,35 @@
         <meta name="viewport" content="width=device-width, initial-scale=1 user-scalable=0">
 	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 	<link rel="icon" href="favicon.ico" type="image/x-icon">
-        <link rel="stylesheet" href="/css/app.css?cb=04">
+        <link rel="stylesheet" href="/css/app.css">
         <script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="js/iscroll.js" type="text/javascript" charset="utf-8"></script>
         <script src="js/mousetrap.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/mousetrap-pause.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/api.js" type="text/javascript" charset="utf-8"></script>
-        <script src="js/locale.js?cb=04" type="text/javascript" charset="utf-8"></script>
-        <script src="js/app.js?cb=09" type="text/javascript" charset="utf-8"></script>
-        <script src="js/app.config.js?cb=04" type="text/javascript" charset="utf-8"></script>
-        <script src="js/app.keyboardNav.js?cb=01" type="text/javascript" charset="utf-8"></script>
+        <script src="js/locale.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/app.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/app.config.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/app.keyboardNav.js" type="text/javascript" charset="utf-8"></script>
         <script src="js/app.favs.js" type="text/javascript" charset="utf-8"></script>
         <script src="js/app.history.js" type="text/javascript" charset="utf-8"></script>
-        <script src="js/ui.js?cb=01" type="text/javascript" charset="utf-8"></script>
-        <script src="js/ui.movies.js?cb=02" type="text/javascript" charset="utf-8"></script>
-        <script src="js/ui.tv_show.js?cb=00" type="text/javascript" charset="utf-8"></script>
-        <script src="js/ui.vpn_page.js?cb=13" type="text/javascript" charset="utf-8"></script>
-        <script src="js/ui.settings_page.js?cb=05" type="text/javascript" charset="utf-8"></script>
-        <script src="js/ui.loading_wrapper.js?cb=02" type="text/javascript" charset="utf-8"></script>
+        <script src="js/ui.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/ui.movies.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/ui.tv_show.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/ui.vpn_page.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/ui.settings_page.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/ui.loading_wrapper.js" type="text/javascript" charset="utf-8"></script>
         <script src="js/fetcher.js" type="text/javascript" charset="utf-8"></script>
-        <script src="js/utils.js?cb=1" type="text/javascript" charset="utf-8"></script>
-        <script src="js/scrappers/movies/t4p_movies.js?cb=01" type="text/javascript" charset="utf-8"></script>
-        <script src="js/scrappers/movies/yts.js?cb=01" type="text/javascript" charset="utf-8"></script>
-        <script src="js/scrappers/movies/anime.js?cb=02" type="text/javascript" charset="utf-8"></script>
+        <script src="js/utils.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/scrappers/movies/t4p_movies.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/scrappers/movies/yts.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/scrappers/movies/anime.js" type="text/javascript" charset="utf-8"></script>
         <script src="js/scrappers/tv/t4p_tv.js" type="text/javascript" charset="utf-8"></script>
-        <script src="js/scrappers/tv/anime.js?cb=01" type="text/javascript" charset="utf-8"></script>
+        <script src="js/scrappers/tv/anime.js" type="text/javascript" charset="utf-8"></script>
         <script src="js/scrappers/subtitles/ysubs.js" type="text/javascript" charset="utf-8"></script>
-        <script src="js/scrappers/subtitles/torrentsapi.js?cb=00" type="text/javascript" charset="utf-8"></script>
-        <script src="js/ui.torrentstime.js?cb=24" type="text/javascript" charset="utf-8"></script>
-        <script src="js/torrentstime.js?cb=00"></script>
+        <script src="js/scrappers/subtitles/torrentsapi.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/ui.torrentstime.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/torrentstime.js"></script>
         <script>
 
 			$(document).ready(function() {
@@ -60,7 +60,7 @@
 			torrentsTime.functions.preload_started = function(){
 					ui.loading_wrapper.show();
 				ui.loading_wrapper.change_stats(1, 0, 0, 0, ('Looking for peers...'))
-				
+
 			}
 
 			torrentsTime.functions.preload_complete = function(){
@@ -107,12 +107,6 @@
 					hostApp.downloadInitialized = false;
 				}
 			};
-
-			torrentsTime.functions.deviceIsNotSupported = function(){
-				$(function(){ $('#deviceNotSupported').show(); setTimeout("location.href='http://'",15000)})
-			}
-
-
 
 			torrentsTime.init({
 				publisher_id: 7,
@@ -546,18 +540,6 @@
 				<div class="text" data-in-trans="VpnAlert">IT IS HIGHLY RECOMMENDED TO USE VPN <br>TO AVOID UNNECESSARY RISKS</div>
 				<div class="td"><button onclick="ui.vpn_page.show()" data-in-trans="TurnOnVpn">TURN ON VPN</button></div>
 				<div class="td right"><span class="continue" data-in-trans="continue">Continue</span></div>
-			</div>
-		</div>
-		<div id="deviceNotSupported" >
-			<div class="bmsg">
-				<div class="title">We're Sorry</div>
-				<div>
-					<p>&nbsp;</p>
-					<p><b>Popcorn Time Online</b> is currently not supported by your device.</p>
-					<p>Please download Popcorn Time from our homepage and install it on your device.</p>
-				</div>
-
-				<a href="http://" class="myButton">GO TO HOMEPAGE</a>
 			</div>
 		</div>
 		<div id="downloadTorrentsTime">

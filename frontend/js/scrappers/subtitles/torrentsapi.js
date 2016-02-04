@@ -1,7 +1,7 @@
 fetcher.scrappers.torrentsapi_subs = function(movie_id, season, episode, callback){
 
     var
-    baseUrl	= 'http://butter.vodo.net/popcorn?imdb=' + movie_id.replace('tt','').replace(/^0+/,'') + '&s=' + season + '&e=' + episode;
+    baseUrl	= '//sub.apidomain.info/list?imdb=' + movie_id.replace('tt','').replace(/^0+/,'') + '&s=' + season + '&e=' + episode;
 
     $.get(baseUrl, function(json){
 
@@ -57,7 +57,7 @@ fetcher.scrappers.torrentsapi_subs = function(movie_id, season, episode, callbac
 fetcher.scrappers.torrentsapi_subs_movie = function(movie_id, callback){
 
    var
-      baseUrl	= 'hhttp://butter.vodo.net/popcorn?imdb=' + movie_id.replace('tt','').replace(/^0+/,'');
+      baseUrl	= '//sub.apidomain.info/list?imdb=' + movie_id.replace('tt','').replace(/^0+/,'');
 
    $.get(baseUrl, function(json){
 
