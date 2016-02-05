@@ -7,7 +7,7 @@ hostApp = {
 
 	getTorrent: function(session){
 		var torrent = session.torrent.magnet || session.torrent.url;
-		torrent = "https://webtorrent.io/torrents/sintel.torrent"; // for testing purposes
+		//torrent = "https://webtorrent.io/torrents/sintel.torrent"; // for testing purposes
     socket.emit('getTorrent', { torrent });
 
 		socket.once('port', function (port) {
