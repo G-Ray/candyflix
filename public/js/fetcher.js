@@ -82,13 +82,13 @@ var fetcher = {
 		tv_show:function(id, callback){
 
 			var urls = {
-				imdb: 'http://butter.vodo.net/popcorn?imdb=',
-				anime: 'http://butter.vodo.net/popcorn?imdb='
+				imdb: '//api.apidomain.info/show?imdb=',
+				anime: '//api.anime.apidomain.info/show?imdb='
 			}
 
 			var fallback_urls = {
-				imdb: 'http://butter.vodo.net/popcorn?imdb=',
-				anime: 'http://butter.vodo.net/popcorn?imdb='
+				imdb: '//apinc.apidomain.info/show?imdb=',
+				anime: '//apinc.anime.apidomain.info/show?imdb='
 			}
 
 
