@@ -1,42 +1,50 @@
 <!doctype htmlwe>
 <html>
     <head>
-        <meta charset="UTF-8">
-        <title>Popcorn Time</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1 user-scalable=0">
-	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-	<link rel="icon" href="favicon.ico" type="image/x-icon">
-        <link rel="stylesheet" href="/css/app.css">
-        <script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="js/iscroll.js" type="text/javascript" charset="utf-8"></script>
-        <script src="js/mousetrap.min.js" type="text/javascript" charset="utf-8"></script>
-		<script src="js/mousetrap-pause.min.js" type="text/javascript" charset="utf-8"></script>
-		<script src="js/api.js" type="text/javascript" charset="utf-8"></script>
-        <script src="js/locale.js" type="text/javascript" charset="utf-8"></script>
-        <script src="js/app.js" type="text/javascript" charset="utf-8"></script>
-        <script src="js/app.config.js" type="text/javascript" charset="utf-8"></script>
-        <script src="js/app.keyboardNav.js" type="text/javascript" charset="utf-8"></script>
-        <script src="js/app.favs.js" type="text/javascript" charset="utf-8"></script>
-        <script src="js/app.history.js" type="text/javascript" charset="utf-8"></script>
-        <script src="js/ui.js" type="text/javascript" charset="utf-8"></script>
-        <script src="js/ui.movies.js" type="text/javascript" charset="utf-8"></script>
-        <script src="js/ui.tv_show.js" type="text/javascript" charset="utf-8"></script>
-        <script src="js/ui.vpn_page.js" type="text/javascript" charset="utf-8"></script>
-        <script src="js/ui.settings_page.js" type="text/javascript" charset="utf-8"></script>
-        <script src="js/ui.loading_wrapper.js" type="text/javascript" charset="utf-8"></script>
-        <script src="js/fetcher.js" type="text/javascript" charset="utf-8"></script>
-        <script src="js/utils.js" type="text/javascript" charset="utf-8"></script>
-        <script src="js/scrappers/movies/t4p_movies.js" type="text/javascript" charset="utf-8"></script>
-        <script src="js/scrappers/movies/yts.js" type="text/javascript" charset="utf-8"></script>
-        <script src="js/scrappers/movies/anime.js" type="text/javascript" charset="utf-8"></script>
-        <script src="js/scrappers/tv/t4p_tv.js" type="text/javascript" charset="utf-8"></script>
-        <script src="js/scrappers/tv/anime.js" type="text/javascript" charset="utf-8"></script>
-        <script src="js/scrappers/subtitles/ysubs.js" type="text/javascript" charset="utf-8"></script>
-        <script src="js/scrappers/subtitles/torrentsapi.js" type="text/javascript" charset="utf-8"></script>
-        <script src="js/ui.torrentstime.js" type="text/javascript" charset="utf-8"></script>
-        <script src="js/torrentstime.js"></script>
-        <script>
+      <meta charset="UTF-8">
+      <title>Popcorn Time</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1 user-scalable=0">
+    	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    	<link rel="icon" href="favicon.ico" type="image/x-icon">
+      <link rel="stylesheet" href="/css/app.css">
+      <script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+      <script src="js/iscroll.js" type="text/javascript" charset="utf-8"></script>
+      <script src="js/mousetrap.min.js" type="text/javascript" charset="utf-8"></script>
+  		<script src="js/mousetrap-pause.min.js" type="text/javascript" charset="utf-8"></script>
+  		<script src="js/api.js" type="text/javascript" charset="utf-8"></script>
+      <script src="js/locale.js" type="text/javascript" charset="utf-8"></script>
+      <script src="js/app.js" type="text/javascript" charset="utf-8"></script>
+      <script src="js/app.config.js" type="text/javascript" charset="utf-8"></script>
+      <script src="js/app.keyboardNav.js" type="text/javascript" charset="utf-8"></script>
+      <script src="js/app.favs.js" type="text/javascript" charset="utf-8"></script>
+      <script src="js/app.history.js" type="text/javascript" charset="utf-8"></script>
+      <script src="js/ui.js" type="text/javascript" charset="utf-8"></script>
+      <script src="js/ui.movies.js" type="text/javascript" charset="utf-8"></script>
+      <script src="js/ui.tv_show.js" type="text/javascript" charset="utf-8"></script>
+      <script src="js/ui.vpn_page.js" type="text/javascript" charset="utf-8"></script>
+      <script src="js/ui.settings_page.js" type="text/javascript" charset="utf-8"></script>
+      <script src="js/ui.loading_wrapper.js" type="text/javascript" charset="utf-8"></script>
+      <script src="js/fetcher.js" type="text/javascript" charset="utf-8"></script>
+      <script src="js/utils.js" type="text/javascript" charset="utf-8"></script>
+      <script src="js/scrappers/movies/t4p_movies.js" type="text/javascript" charset="utf-8"></script>
+      <script src="js/scrappers/movies/yts.js" type="text/javascript" charset="utf-8"></script>
+      <script src="js/scrappers/movies/anime.js" type="text/javascript" charset="utf-8"></script>
+      <script src="js/scrappers/tv/t4p_tv.js" type="text/javascript" charset="utf-8"></script>
+      <script src="js/scrappers/tv/anime.js" type="text/javascript" charset="utf-8"></script>
+      <script src="js/scrappers/subtitles/ysubs.js" type="text/javascript" charset="utf-8"></script>
+      <script src="js/scrappers/subtitles/torrentsapi.js" type="text/javascript" charset="utf-8"></script>
+      <script src="js/ui.torrentstime.js" type="text/javascript" charset="utf-8"></script>
+      <script src="js/torrentstime.js"></script>
+      <script src="/socket.io/socket.io.js"></script>
+      <script>
+        var socket = io.connect('http://localhost:3000');
+        socket.on('news', function (data) {
+          console.log(data);
+          socket.emit('my other event', { my: 'data' });
+        });
+      </script>
 
+      <script>
 			$(document).ready(function() {
 				ui.torrentsTime.checkPluginSupportFF();
 			});

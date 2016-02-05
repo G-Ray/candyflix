@@ -6,7 +6,7 @@ hostApp = {
 	},
 
 	getTorrent: function(session){
-		torrentsTime.setup.vpnAlert = app.config.hostApp.vpnAlert!='off';
+		/*torrentsTime.setup.vpnAlert = app.config.hostApp.vpnAlert!='off';
 		torrentsTime.pt.setup.source = session.torrent.magnet || session.torrent.url;
 		torrentsTime.pt.setup.file = session.torrent.file;
 		torrentsTime.setup.source = session.torrent.magnet || session.torrent.url;
@@ -20,7 +20,8 @@ hostApp = {
 		else{
 			ui.loading_wrapper.show();
 			torrentsTime.pt.start();
-		}
+		}*/
+		
 	},
 
 

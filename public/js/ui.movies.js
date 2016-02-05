@@ -61,7 +61,7 @@ ui.movies = {
 
 	watch:function(e){
 		Mousetrap.pause();
-		torrentsTime.pt.setup.vpnShowed = false;
+		//torrentsTime.pt.setup.vpnShowed = false;
 		app.torrent.get(this.session);
 
 		var session = ui.movies.session;
