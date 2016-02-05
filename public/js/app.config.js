@@ -54,7 +54,7 @@ app.config={
 
 	hostApp:{
 
-		isVpnConnected:	false,
+		isVpnConnected:	true,
 		tempPath:		localStorage.getItem('conf_hostApp_tempPath') || '',
 		subsFontSize:	localStorage.getItem('conf_hostApp_subsFontSize') || "0",
 		cleanOnExit:	localStorage.getItem('conf_hostApp_cleanOnExit') && localStorage.getItem('conf_hostApp_cleanOnExit')!="0",

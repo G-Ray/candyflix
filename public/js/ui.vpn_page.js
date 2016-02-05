@@ -37,8 +37,9 @@ ui.vpn_page = {
 
 			$('#slider_vpn .awaiting_msg').remove();
 			$('#slider_vpn .vpn_icon span.icon').removeClass('unlocked').addClass('locked');
-			$('#slider_vpn .vpn_button').html('Disconnect').unbind('click').click(function(){
-				app.config.hostApp.vpn_disconnect();
+			$('#slider_vpn .vpn_button').html('Your IP is protected behind this server').unbind('click').click(function(){
+				//app.config.hostApp.vpn_disconnect();
+				ui.vpn_page.show();
 			});
 
 		}

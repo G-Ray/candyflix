@@ -41,6 +41,7 @@ io.on('connection', function (socket) {
   });
 
   socket.on('cancelTorrent', function () {
+    if(!socket.playing) return;
     processes[socket.playing].spectators--;
     if(processes[socket.playing].spectators === 0) {
       processes[socket.playing].child.kill();
