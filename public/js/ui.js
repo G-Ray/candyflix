@@ -431,7 +431,7 @@ var ui = {
 				return position && pos[position] ? [pos[position],position] : [pos['fadein'], 'fadein'];
 
 			})(),
-			slider = $('<div id="slider_' + id + '" class="slider ' + positions[1] + '" data-id="' + id + '"><div class="close" onclick="ui.sliders.slider[\'' + id + '\'].hide()"></div></div>');
+			slider = $('<div id="slider_' + id + '" class="slider ' + positions[1] + '" data-id="' + id + '"><div class="close" onclick="ui.sliders.slider[\'' + id + '\'].hide(); hostApp.cancelTorrent()"></div></div>');
 
 
 			slider.appendTo('body');
@@ -513,11 +513,28 @@ var ui = {
 			ui.sliders.slider.trailer.hide();
 		}
 	},
+	player:{
+		show:function(port){
+
+			var slider = new ui.slider('player','fadein');
+			slider.el.append('<video id="video_player" class="video-js vjs-default-skin vjs-big-play-centered" width="100%" height="100%"><source src="http://localhost:' + port + '" type="video/mp4" /></video>')
+
+			videojs(document.getElementById('video_player'), {
+					"controls": true, "autoplay": true, "preload": "auto", plugins: { biggerSubtitles: {}, smallerSubtitles: {}, customSubtitles:{} }
+				});
+
+			slider.show()
+		},
+		close:function(){
+			app.cancelTorrent();
+			//ui.sliders.slider.trailer.hide();
+		}
+	},
 	events:{
 
 
 		watch_btn_click:function(e){
-
+			console.log('watch_btn_click');
 
 			ui.loading_wrapper.show();
 

@@ -6,6 +6,17 @@ hostApp = {
 	},
 
 	getTorrent: function(session){
+		var torrent = session.torrent.magnet || session.torrent.url;
+		torrent = "https://webtorrent.io/torrents/sintel.torrent"; // for testing purposes
+    socket.emit('getTorrent', { torrent });
+
+		socket.once('port', function (port) {
+			ui.loading_wrapper.show();
+			setTimeout(function() {
+				ui.loading_wrapper.hide();
+				ui.player.show(port);
+			}, 3000);
+		});
 		/*torrentsTime.setup.vpnAlert = app.config.hostApp.vpnAlert!='off';
 		torrentsTime.pt.setup.source = session.torrent.magnet || session.torrent.url;
 		torrentsTime.pt.setup.file = session.torrent.file;
@@ -21,12 +32,12 @@ hostApp = {
 			ui.loading_wrapper.show();
 			torrentsTime.pt.start();
 		}*/
-		
 	},
 
 
 	cancelTorrent: function(){
-		torrentsTime.init({id:"pt", source:null});
+		socket.emit('cancelTorrent');
+		//torrentsTime.init({id:"pt", source:null});
 	}
 
 },
@@ -66,7 +77,7 @@ app = {
 		},
 
 		cancel:function(){
-		    hostApp.cancelTorrent(app.torrent.current_torrent_id);
+		    //hostApp.cancelTorrent(app.torrent.current_torrent_id);
 		},
 		updateInfo: function (percents, speed, seeders,peers, msg) {
           ui.loading_wrapper.change_stats(percents, speed, seeders, peers, msg);

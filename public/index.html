@@ -7,6 +7,8 @@
     	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     	<link rel="icon" href="favicon.ico" type="image/x-icon">
       <link rel="stylesheet" href="/css/app.css">
+      <link rel="stylesheet" href="/css/video-js.css">
+      <script src="/js/video.js" type="text/javascript" charset="utf-8"></script>
       <script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
       <script src="js/iscroll.js" type="text/javascript" charset="utf-8"></script>
       <script src="js/mousetrap.min.js" type="text/javascript" charset="utf-8"></script>
@@ -37,7 +39,7 @@
       <script src="js/torrentstime.js"></script>
       <script src="/socket.io/socket.io.js"></script>
       <script>
-        var socket = io.connect('http://localhost:3000');
+        var socket = io();
         socket.on('news', function (data) {
           console.log(data);
           socket.emit('my other event', { my: 'data' });

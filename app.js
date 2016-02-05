@@ -2,6 +2,11 @@ var express = require('express');
 var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
+var getport = require('getport');
+var spawn = require('child_process').spawn;
+
+var processes = {}; // Peerflix processes
+var users = 0;
 
 server.listen(3000, function () {
   console.log('Example app listening on port 3000!');
@@ -9,13 +14,92 @@ server.listen(3000, function () {
 
 app.use(express.static('public'));
 
+function printProcesses() {
+  console.log("------------------RUNNING PROCESSES------------------");
+  for(var p in processes) {
+    console.log(p + " | Port:" + processes[p].port + " | Spectators: " + processes[p].spectators);
+  }
+  console.log("-----------------------------------------------------");
+}
+
 io.on('connection', function (socket) {
-  socket.emit('news', { hello: 'world' });
-  socket.on('my other event', function (data) {
-    console.log(data);
+  users++;
+  console.log("Connected users : " + users);
+
+  socket.on('disconnect', function() {
+    users--;
+    console.log("Connected users : " + users);
+
+    if(socket.playing != undefined) {
+      processes[socket.playing].spectators--;
+      if(processes[socket.playing].spectators === 0) {
+        processes[socket.playing].child.kill();
+        delete processes[socket.playing];
+      }
+    }
+    printProcesses();
+  });
+
+  socket.on('cancelTorrent', function () {
+    processes[socket.playing].spectators--;
+    if(processes[socket.playing].spectators === 0) {
+      processes[socket.playing].child.kill();
+      delete processes[socket.playing];
+    }
+    socket.playing = null;
+    printProcesses();
+  });
+
+  socket.on('getTorrent', function (data) {
+    var torrent = data.torrent
+    console.log(torrent);
+
+    // There is already a stream running, kill it
+    if(socket.playing && process[socket.playing] != torrent) {
+      processes[socket.playing].spectators--;
+      if(processes[socket.playing].spectators === 0) {
+        processes[socket.playing].child.kill();
+        delete processes[socket.playing];
+      }
+      socket.playing = null;
+    }
+
+    // A process already exists for this torrent
+    if(processes[torrent]) {
+       port = processes[torrent].port;
+       processes[torrent].spectators++;
+       socket.playing = torrent;
+       socket.emit('port', port);
+       printProcesses();
+       return;
+    }
+
+    // Create a new process
+    getport(function (err, port) {
+      if (err) console.log(err);
+
+      var process = {};
+      var child = spawn('peerflix', [torrent, '--port='+ port, '--tmp=./tmp', '--remove'], {});
+      process.child = child;
+      process.port = port;
+      process.spectators = 0;
+
+      processes[torrent] = process;
+      processes[torrent].spectators++;
+      socket.playing = torrent;
+      socket.emit('port', port);
+
+      printProcesses();
+
+      child.stdout.on('data', function(data) {
+        //console.log('stdout: ' + data);
+      });
+      child.stderr.on('data', function(data) {
+        console.log('stderr: ' + data);
+      });
+      child.on('close', function (code, signal) {
+        console.log('child closed');
+      });
+    });
   });
 });
-
-/*app.get('/', function (req, res) {
-  res.sendfile(__dirname + '/index.html');
-});*/
