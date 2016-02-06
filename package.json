@@ -1,0 +1,24 @@
+{
+  "name": "candyflix",
+  "version": "0.1.0",
+  "description": "Popcorn Time in you browser. No plugin needed.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/G-Ray/candyflix.git"
+  },
+  "author": "Geoffrey Bonneville",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/G-Ray/candyflix/issues"
+  },
+  "homepage": "https://github.com/G-Ray/candyflix#readme",
+  "dependencies": {
+    "express": "^4.13.4",
+    "getport": "^0.1.0",
+    "socket.io": "^1.4.5"
+  }
+}
