@@ -224,7 +224,7 @@ ui.tv = {
 
 	watch:function(e){
 		Mousetrap.pause();
-		torrentsTime.pt.setup.vpnShowed = false;
+		//torrentsTime.pt.setup.vpnShowed = false;
 		app.torrent.get(this.session);
 
 		app.history.add([this.session]);
