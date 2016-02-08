@@ -4,6 +4,7 @@ var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var getport = require('getport');
 var spawn = require('child_process').spawn;
+var parseTorrent = require('parse-torrent');
 
 var processes = {}; // Peerflix processes
 var users = 0;
@@ -17,7 +18,7 @@ app.use(express.static('public'));
 function printProcesses() {
   console.log("------------------RUNNING PROCESSES------------------");
   for(var p in processes) {
-    console.log(p + " | Port:" + processes[p].port + " | Spectators: " + processes[p].spectators);
+    console.log(processes[p].name + " | Port:" + processes[p].port + " | Spectators: " + processes[p].spectators);
   }
   console.log("-----------------------------------------------------");
 }
@@ -87,10 +88,15 @@ io.on('connection', function (socket) {
 
       processes[torrent] = process;
       processes[torrent].spectators++;
+
+      parseTorrent.remote(torrent, function (err, parsedTorrent) {
+        if (err) throw err
+        processes[torrent].name = parsedTorrent.name;
+        printProcesses();
+      })
+
       socket.playing = torrent;
       socket.emit('port', port);
-
-      printProcesses();
 
       child.stdout.on('data', function(data) {
         //console.log('stdout: ' + data);
