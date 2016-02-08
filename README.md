@@ -14,6 +14,7 @@ Installation
 
 Credits
 -------
+Based on the UI of https://github.com/PopcornRepos/PopcornTimeOnline
 
 Popcorn Time and Time4popcorn
 
