@@ -54,7 +54,6 @@ io.on('connection', function (socket) {
 
   socket.on('getTorrent', function (data) {
     var torrent = data.torrent
-    console.log(torrent);
 
     // There is already a stream running, kill it
     if(socket.playing && process[socket.playing] != torrent) {
