@@ -4,6 +4,7 @@
   "description": "Popcorn Time in you browser. No plugin needed.",
   "main": "app.js",
   "scripts": {
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
